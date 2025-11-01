@@ -31,12 +31,16 @@ function Que({
     );
   };
   const handleSpeak = (text) => {
-    const speech = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(speech);
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      const speech = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(speech);
+    }
   };
 
   const handleStop = () => {
-    window.speechSynthesis.cancel();
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
   };
   return (
     <>

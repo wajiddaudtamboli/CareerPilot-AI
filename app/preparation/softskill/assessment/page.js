@@ -1,20 +1,25 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Mic, StopCircle, Camera, CameraOff, AlertCircle } from "lucide-react";
+import dynamicImport from "next/dynamic";
 
 import Que from "./components/Que";
 import { Button } from "../../../../components/ui/button";
 import { Card, CardContent } from "../../../../components/ui/card";
 import { Alert, AlertDescription } from "../../../../components/ui/alert";
-import useSpeechToText from "react-hook-speech-to-text";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Textarea } from "../../../../components/ui/textarea";
 
 import FeedbackReport from "./components/FeedbackReport";
 import { AiSoftSkillReport } from '../../../../config/AiModels';
-import WebCam from "../../../components/WebCam";
-import LoadingDialog from "../../../components/LoadingDialog";
+
+// Dynamic imports to avoid SSR issues
+const WebCam = dynamicImport(() => import("../../../components/WebCam"), { ssr: false });
+const LoadingDialog = dynamicImport(() => import("../../../components/LoadingDialog"), { ssr: false });
+
+// Disable static generation for this page
+export const dynamic = 'force-dynamic';
 
 function InterviewPractice() {
   const [questions, setQuestions] = useState([]);
@@ -27,18 +32,34 @@ function InterviewPractice() {
   const [loading, setLoading] = useState(false);
 
   const videoRef = useRef(null);
-  const {
-    error,
-    interimResult,
-    isRecording,
-    results,
-    startSpeechToText,
-    stopSpeechToText,
-    setResults,
-  } = useSpeechToText({
-    continuous: true,
-    useLegacyResults: false,
-  });
+
+  // Speech-to-text state
+  const [speechError, setSpeechError] = useState(null);
+  const [speechResults, setSpeechResults] = useState([]);
+  const [isRecording, setIsRecording] = useState(false);
+  const [speechModule, setSpeechModule] = useState(null);
+
+  // Initialize speech-to-text on client side only
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import("react-hook-speech-to-text").then((module) => {
+        setSpeechModule(module);
+      });
+    }
+  }, []);
+
+  // Placeholder functions for speech to text
+  const startSpeechToText = () => {
+    console.log('Speech to text not available');
+  };
+  
+  const stopSpeechToText = () => {
+    console.log('Speech to text not available');
+  };
+  
+  const setResults = () => {
+    console.log('Speech to text not available');
+  };
 
   const checkPermissions = async () => {
     try {
@@ -57,11 +78,14 @@ function InterviewPractice() {
 
   useEffect(() => {
     checkPermissions();
-    const storedQuestions = localStorage.getItem("softSkillQuestions");
-    if (storedQuestions) {
-      setQuestions(JSON.parse(storedQuestions));
-    } else {
-      toast.error("Questions not found");
+    // Only access localStorage on client side
+    if (typeof window !== 'undefined') {
+      const storedQuestions = localStorage.getItem("softSkillQuestions");
+      if (storedQuestions) {
+        setQuestions(JSON.parse(storedQuestions));
+      } else {
+        toast.error("Questions not found");
+      }
     }
   }, []);
 

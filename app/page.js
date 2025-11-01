@@ -15,10 +15,12 @@ import {
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "./components/ThemeContext";
+import { useUser } from '@clerk/nextjs';
 
 export default function JobPrepHomepage() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const { isDarkMode } = useContext(ThemeContext);
+  const { isSignedIn } = useUser();
 
   const testimonials = [
     {
@@ -155,7 +157,9 @@ export default function JobPrepHomepage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className={`group ${
+                <button 
+                  onClick={() => window.open('http://localhost:3001/', '_blank')}
+                  className={`group ${
                   isDarkMode
                     ? "bg-gray-600 hover:bg-gray-700 text-white"
                     : "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700"
@@ -164,13 +168,15 @@ export default function JobPrepHomepage() {
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                <button className={`group ${
+                <button 
+                  onClick={() => window.location.href = '/careerplanning?page=RoleRoadMap'}
+                  className={`group ${
                   isDarkMode
                     ? "bg-gray-800/70 text-white hover:bg-gray-700/70"
                     : "bg-gray-100/80 backdrop-blur-sm text-gray-700 hover:bg-gray-200/80"
                 } px-8 py-4 rounded-full text-lg font-semibold transition-all flex items-center justify-center space-x-2`}>
                   <Play className="w-5 h-5" />
-                  <span>Watch Demo</span>
+                  <span>Get Demo</span>
                 </button>
               </div>
 

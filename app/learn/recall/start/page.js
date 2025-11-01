@@ -1,13 +1,15 @@
-import React from "react";
-import NotesSection from "../components/NotesSection";
+"use client";
+import React, { Suspense } from "react";
 import CourseInterface from "../components/NotesSection";
 
-const page = () => {
+const Page = () => {
   return (
     <div>
-      <CourseInterface />
+      <Suspense fallback={<div className="p-6">Loading...</div>}>
+        <CourseInterface />
+      </Suspense>
     </div>
   );
 };
 
-export default page;
+export default Page;

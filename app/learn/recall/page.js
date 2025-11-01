@@ -2,21 +2,28 @@
 import React, { useEffect, useState } from "react";
 import HeroSection from "./components/HeroSection";
 import CourseSelectionForm from "./components/Form";
-import SyallbusOutline from "./components/PreviewOutline.jsx";
-import NotesSection from "./components/NotesSection";
+import SyallbusOutline from "./components/PreviewOutline.js";
 
 const Recall = () => {
   const [form, setForm] = useState(false);
   const [outline, setOutline] = useState(false);
-  const [hero, setHero] = useState(false);
-  const [courseData, setCourseData] = useState();
+  const [courseData, setCourseData] = useState(null);
 
   useEffect(() => {
     const RecallSyllabus = localStorage.getItem("RecallSyllabus");
     if (RecallSyllabus) {
-      setOutline(true);
+      try {
+        const parsed = JSON.parse(RecallSyllabus);
+        setCourseData(parsed);
+        setOutline(true);
+        setForm(true);
+      } catch (error) {
+        console.error("Failed to parse stored syllabus:", error);
+        localStorage.removeItem("RecallSyllabus");
+      }
     }
   }, []);
+
   return (
     <>
       <div>
@@ -29,7 +36,7 @@ const Recall = () => {
         ) : (
           <HeroSection setForm={setForm} />
         )}
-        {outline && <SyallbusOutline courseData={courseData} />}
+        {outline && courseData && <SyallbusOutline courseData={courseData} />}
       </div>
     </>
   );

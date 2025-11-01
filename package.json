@@ -18,16 +18,21 @@
   },
   "scripts": {
     "dev": "next dev --turbo",
+    "dev:clean": "rimraf .next && next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "clean": "rimraf .next out",
+    "clean:cache": "rimraf .next node_modules/.cache",
+    "fresh": "rimraf .next node_modules && npm install && npm run dev",
     "postinstall": "next telemetry disable",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.34.1",
+    "@clerk/themes": "^2.4.30",
     "@google/generative-ai": "^0.21.0",
     "@heroicons/react": "^2.1.5",
     "@neondatabase/serverless": "^1.0.1",
@@ -85,10 +90,10 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^15.1.2",
     "@tailwindcss/postcss": "^4.1.10",
+    "@types/file-saver": "^2.0.7",
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.1",
-    "@types/file-saver": "^2.0.7",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",

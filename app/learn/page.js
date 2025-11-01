@@ -16,6 +16,9 @@ const componentMap = {
   CreatedCourses: dynamic(() => import("./components/CreateCourse")),
   Courses: dynamic(() => import("./components/CreateCourse")), // Add proper mapping for Courses
   SoftSkill: dynamic(() => import("./components/SoftSkill")),
+  Roadmaps: dynamic(() => import("./components/Roadmaps")), // AI-powered career roadmaps
+  TestAbility: dynamic(() => import("./components/TestAbility")), // Test knowledge component
+  Recall: dynamic(() => import("./recall/components/Form")), // Recall learning component
 };
 
 const LearnContent = () => {

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ThemeContext } from "./ThemeContext";
 import ThemeToggle from "./ThemeToggle";
+import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs';
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,6 +13,7 @@ function NavBar() {
   const dropdownRefs = useRef([]);
   const { isDarkMode } = useContext(ThemeContext);
   const pathname = usePathname();
+  const { isSignedIn, user } = useUser();
 
   const menuItems = [
     {
@@ -197,6 +199,51 @@ function NavBar() {
             {/* Controls */}
             <div className="flex items-center space-x-3">
               <ThemeToggle />
+              
+              {/* Authentication Components */}
+              {!isSignedIn ? (
+                <div className="flex items-center space-x-2">
+                  <SignInButton mode="modal">
+                    <button className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
+                      isDarkMode
+                        ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                        : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                    }`}>
+                      Sign In
+                    </button>
+                  </SignInButton>
+                  <SignUpButton mode="modal">
+                    <button className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
+                      isDarkMode
+                        ? "bg-blue-600 hover:bg-blue-700 text-white"
+                        : "bg-blue-600 hover:bg-blue-700 text-white"
+                    }`}>
+                      Sign Up
+                    </button>
+                  </SignUpButton>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-3">
+                  <Link
+                    href="/dashboard"
+                    className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
+                      isDarkMode
+                        ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                        : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                    }`}
+                  >
+                    Dashboard
+                  </Link>
+                  <UserButton 
+                    appearance={{
+                      elements: {
+                        avatarBox: "w-8 h-8"
+                      }
+                    }}
+                    afterSignOutUrl="/"
+                  />
+                </div>
+              )}
             </div>
             <Link
               href={"/careerplanning?page=DepartmentJobRoles"}
@@ -295,8 +342,56 @@ function NavBar() {
               style={{ color: 'white' }}
               onClick={handleLinkClick}
             >
-                            Get Started
+              Get Started
             </Link>
+            
+            {/* Mobile Authentication */}
+            {!isSignedIn ? (
+              <div className="flex space-x-2 pt-3">
+                <SignInButton mode="modal">
+                  <button className={`flex-1 py-3 rounded-md font-medium transition-colors duration-200 ${
+                    isDarkMode
+                      ? "text-gray-300 hover:text-white border border-gray-600 hover:bg-gray-700"
+                      : "text-gray-700 hover:text-blue-600 border border-gray-300 hover:bg-blue-50"
+                  }`}>
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className={`flex-1 py-3 rounded-md font-medium transition-colors duration-200 ${
+                    isDarkMode
+                      ? "bg-blue-600 hover:bg-blue-700 text-white"
+                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                  }`}>
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </div>
+            ) : (
+              <div className="pt-3 space-y-2">
+                <Link
+                  href="/dashboard"
+                  className={`block w-full text-center py-3 rounded-md font-medium transition-colors duration-200 ${
+                    isDarkMode
+                      ? "text-gray-300 hover:text-white border border-gray-600 hover:bg-gray-700"
+                      : "text-gray-700 hover:text-blue-600 border border-gray-300 hover:bg-blue-50"
+                  }`}
+                  onClick={handleLinkClick}
+                >
+                  Dashboard
+                </Link>
+                <div className="flex justify-center pt-2">
+                  <UserButton 
+                    appearance={{
+                      elements: {
+                        avatarBox: "w-10 h-10"
+                      }
+                    }}
+                    afterSignOutUrl="/"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

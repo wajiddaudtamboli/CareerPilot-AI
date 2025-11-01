@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useUser } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 import { 
   Users, 
   BookOpen, 
@@ -16,6 +18,8 @@ import {
 } from 'lucide-react';
 
 export default function DashboardPage() {
+  const { isSignedIn, user: clerkUser, isLoaded } = useUser();
+  
   const [user, setUser] = useState({
     name: 'Career Pilot User',
     level: 'Intermediate',
@@ -30,6 +34,37 @@ export default function DashboardPage() {
     skillsLearned: 6,
     certificatesEarned: 3
   });
+
+  // Update user name when Clerk user is loaded
+  useEffect(() => {
+    if (clerkUser) {
+      setUser(prev => ({
+        ...prev,
+        name: clerkUser.firstName || clerkUser.fullName || 'Career Pilot User'
+      }));
+    }
+  }, [clerkUser]);
+
+  // Redirect if not signed in
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      redirect('/');
+    }
+  }, [isSignedIn, isLoaded]);
+
+  // Show loading while checking auth
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      </div>
+    );
+  }
+
+  // Don't render if not signed in (will redirect)
+  if (!isSignedIn) {
+    return null;
+  }
 
   const recentActivities = [
     { id: 1, title: 'Completed Mock Interview', type: 'interview', time: '2 hours ago' },

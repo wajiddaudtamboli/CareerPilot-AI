@@ -1021,6 +1021,89 @@ export async function POST(request: NextRequest) {
 function getEnhancedFallbackResponse(prompt: string): string {
   const p = (prompt || '').toLowerCase();
 
+  // NEW: Study material/recall fallback
+  if (p.includes('study material') || p.includes('study plan') || p.includes('interview preparation')) {
+    const topicMatch = /(?:study.*?for|study.*?plan.*?for|material.*?for).*?["']?([^"'.?!]+)["']?/i.exec(prompt || '');
+    const topic = topicMatch ? topicMatch[1].trim() : 'Technology';
+    
+    // Clean up the topic name
+    const cleanTopic = topic.replace(/for interview preparation.*$/i, '').trim();
+    
+    return JSON.stringify({
+      courseTitle: `Complete ${cleanTopic} Interview Guide`,
+      courseSummary: `Comprehensive ${cleanTopic} interview preparation covering fundamentals, advanced concepts, practical applications, and industry best practices. This study material is designed to help you ace technical interviews with confidence.`,
+      chapters: [
+        {
+          chapterTitle: `${cleanTopic} Fundamentals`,
+          chapterSummary: `Core concepts and foundational knowledge essential for understanding ${cleanTopic}`,
+          topics: [
+            `Introduction to ${cleanTopic}`,
+            "Basic concepts and terminology",
+            "Historical context and evolution",
+            "Core principles and theory",
+            "Fundamental operations and syntax"
+          ]
+        },
+        {
+          chapterTitle: "Data Structures and Algorithms",
+          chapterSummary: "Essential data structures and algorithmic concepts frequently tested in interviews",
+          topics: [
+            "Arrays, Strings, and Linked Lists",
+            "Stacks, Queues, and Hash Tables",
+            "Trees and Binary Search Trees",
+            "Graphs and Graph Algorithms",
+            "Sorting and Searching Algorithms",
+            "Dynamic Programming Basics"
+          ]
+        },
+        {
+          chapterTitle: `Advanced ${cleanTopic} Concepts`,
+          chapterSummary: `In-depth coverage of advanced topics and sophisticated techniques in ${cleanTopic}`,
+          topics: [
+            "Advanced patterns and architectures",
+            "Performance optimization techniques",
+            "Security best practices",
+            "Error handling and debugging",
+            "Testing strategies and methodologies"
+          ]
+        },
+        {
+          chapterTitle: "System Design and Architecture",
+          chapterSummary: "System design principles and architectural patterns commonly discussed in senior interviews",
+          topics: [
+            "Scalability and load balancing",
+            "Database design and optimization",
+            "Microservices vs Monolithic architecture",
+            "Caching strategies and CDNs",
+            "API design and RESTful services"
+          ]
+        },
+        {
+          chapterTitle: "Practical Application and Projects",
+          chapterSummary: "Real-world applications, case studies, and hands-on project experience",
+          topics: [
+            "Industry use cases and applications",
+            "Building scalable solutions",
+            "Integration with other technologies",
+            "DevOps and deployment strategies",
+            "Monitoring and maintenance practices"
+          ]
+        },
+        {
+          chapterTitle: "Interview Preparation and Tips",
+          chapterSummary: "Strategic preparation for technical interviews and behavioral questions",
+          topics: [
+            "Common interview questions and answers",
+            "Coding challenge strategies",
+            "Behavioral interview preparation",
+            "Salary negotiation techniques",
+            "Follow-up and networking tips"
+          ]
+        }
+      ]
+    });
+  }
+
   // Enhanced career roadmap fallback with detailed structure
   if (
     p.includes('career roadmap') ||

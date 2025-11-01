@@ -10,11 +10,21 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import Note from "./Note";
-import FlashCard from "../start/components/FlashCard";
-import McqPrepare from "../start/components/McqPrepare";
-import TeachToOther from "../start/components/TeachToOther";
-import QueAns from "../start/components/QueAns";
+import dynamic from "next/dynamic";
+// Dynamically import browser-only components to avoid SSR 'document is not defined'
+const Note = dynamic(() => import("./Note"), { ssr: false });
+const FlashCard = dynamic(() => import("../start/components/FlashCard"), {
+  ssr: false,
+});
+const McqPrepare = dynamic(() => import("../start/components/McqPrepare"), {
+  ssr: false,
+});
+const TeachToOther = dynamic(() => import("../start/components/TeachToOther"), {
+  ssr: false,
+});
+const QueAns = dynamic(() => import("../start/components/QueAns"), {
+  ssr: false,
+});
 import { useSearchParams } from "next/navigation";
 
 const CourseInterface = () => {
@@ -22,9 +32,7 @@ const CourseInterface = () => {
   const value = searchParams?.get("value");
   const chapter = Number(searchParams?.get("chapter")) - 1;
 
-  const [course, setCourse] = useState(
-    JSON.parse(localStorage.getItem("RecallSyllabus"))
-  );
+  const [course, setCourse] = useState(null);
 
   const [active, setActive] = useState(0); //chapter
   const [active2, setActive2] = useState(chapter || 0);
@@ -41,6 +49,17 @@ const CourseInterface = () => {
 
   useEffect(() => {
     setActive(value);
+    // Safely read from localStorage on the client only
+    if (typeof window !== 'undefined') {
+      const stored = window.localStorage.getItem("RecallSyllabus");
+      if (stored) {
+        try {
+          setCourse(JSON.parse(stored));
+        } catch {
+          // ignore parse errors; keep course as null
+        }
+      }
+    }
     const handleClickOutside = (event) => {
       if (
         !event.target.closest(".sidebar") &&
@@ -157,7 +176,7 @@ const CourseInterface = () => {
         </div>
 
         {/* Chapters Sidebar */}
-        {active != 3 && active != 4 && (
+        {active != 3 && active != 4 && course && course.chapters && (
           <div
             className={`
             fixed lg:static sidebar mt-2

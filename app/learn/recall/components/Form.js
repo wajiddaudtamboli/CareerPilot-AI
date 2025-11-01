@@ -1,9 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AiQuizRecall } from "../../../../lib/aiService";
-
-import Image from "next/image";
-
 import { useSearchParams } from "next/navigation";
 import LoadingDialog from "../../../components/LoadingDialog";
 
@@ -31,19 +28,61 @@ const CourseSelectionForm = ({
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const prompt = `Generate a study material for ${topic} for interview preparation with summery of course, List of Chapters along with summery for each chapter, Topic list in each chapter. in JSON format.`;
+    const prompt = `Create a comprehensive study plan for "${topic}" for interview preparation. 
+
+Return ONLY a valid JSON object with this EXACT structure:
+{
+  "courseTitle": "Complete ${topic} Interview Guide",
+  "courseSummary": "Comprehensive interview preparation covering core concepts and practical applications",
+  "chapters": [
+    {
+      "chapterTitle": "Fundamentals",
+      "chapterSummary": "Core concepts and basics",
+      "topics": ["Basic concepts", "Key principles", "Foundation knowledge"]
+    },
+    {
+      "chapterTitle": "Advanced Topics",
+      "chapterSummary": "In-depth advanced concepts",
+      "topics": ["Advanced techniques", "Best practices", "Real-world applications"]
+    }
+  ]
+}
+
+Make it specific to ${topic} with 4-6 chapters and 3-5 topics per chapter. Return ONLY the JSON, no markdown, no extra text.`;
+
     try {
-  const result = await AiQuizRecall.sendMessage(prompt);
+      const result = await AiQuizRecall.sendMessage(prompt);
       const responseText = await result.response.text();
-      console.log("Response Text: ", responseText);
-      const json = JSON.parse(responseText);
+      console.log("Raw API Response: ", responseText);
+      
+      let json;
+      try {
+        // First try direct parsing
+        json = JSON.parse(responseText.trim());
+      } catch (parseError) {
+        console.log("Direct parse failed, trying extraction...");
+        // Try to extract JSON from response if there's extra text
+        const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          json = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error("No valid JSON found in response");
+        }
+      }
+      
+      // Validate the required structure
+      if (!json.courseTitle || !json.courseSummary || !Array.isArray(json.chapters)) {
+        console.error("Invalid JSON structure:", json);
+        throw new Error("Response doesn't match expected format");
+      }
+      
+      console.log("Parsed course data:", json);
       setCourseData(json);
       localStorage.setItem("RecallSyllabus", JSON.stringify(json));
       setOutline(true);
-      window.location.reload();
-      setForm(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error in handleSubmit:", error);
+      alert(`Failed to generate study material: ${error.message}. Please try again.`);
     } finally {
       setLoading(false);
     }
@@ -102,12 +141,14 @@ const CourseSelectionForm = ({
             </div>
             <div className="flex justify-center items-center">
               {outline && (
-                <Image
-                  src={"/scroll-down.gif"}
-                  alt="Logo"
-                  width={100}
-                  height={100}
-                />
+                <div className="text-center">
+                  <p className="text-white text-sm mb-2">Scroll down to see your study material</p>
+                  <div className="animate-bounce">
+                    <svg className="w-6 h-6 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </div>
+                </div>
               )}
             </div>
           </form>

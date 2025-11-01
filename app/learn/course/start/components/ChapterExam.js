@@ -169,7 +169,7 @@
 
 // export default ChapterExam;
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../../../../../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../../../components/ui/card";
 import { Progress } from "../../../../../components/ui/progress";
@@ -180,7 +180,22 @@ function ChapterExam({ setRestart, setComplete, topicName }) {
   const [score, setScore] = useState(0);
   const [showExplanation, setShowExplanation] = useState(false);
   const [examCompleted, setExamCompleted] = useState(false);
-  const exam = JSON.parse(localStorage.getItem("chapterExam"));
+  const [exam, setExam] = useState(null);
+
+  // Load exam data on client side
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const examData = localStorage.getItem("chapterExam");
+      if (examData) {
+        setExam(JSON.parse(examData));
+      }
+    }
+  }, []);
+
+  // Show loading if exam data is not yet loaded
+  if (!exam) {
+    return <div>Loading exam...</div>;
+  }
 
   const handleAnswerSelection = (option) => {
     setSelectedAnswer(option);
@@ -239,8 +254,10 @@ function ChapterExam({ setRestart, setComplete, topicName }) {
                 className="w-full bg-blue-600 hover:bg-blue-700"
                 onClick={() => {
                   setComplete(true);
-                  window.location.reload();
-                  localStorage.removeItem("expandindex");
+                  if (typeof window !== 'undefined') {
+                    window.location.reload();
+                    localStorage.removeItem("expandindex");
+                  }
                 }}
               >
                 Next Chapter

@@ -67,11 +67,7 @@ const nextConfig = {
 
   // Webpack configuration - CRITICAL FIXES
   webpack: (config, { isServer }) => {
-    // Fix for ES modules in browser
-    config.resolve.extensionAlias = {
-      '.js': ['.js', '.ts', '.tsx'],
-      '.jsx': ['.jsx', '.tsx']
-    };
+    // Keep Next's default extension resolution to avoid parser mode issues
 
     // Optimize bundle size and fix module resolution
     if (!isServer) {
