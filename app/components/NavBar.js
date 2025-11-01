@@ -119,13 +119,14 @@ function NavBar() {
             }}
             className="flex items-center space-x-2 cursor-pointer"
           >
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-              isDarkMode
-              ? "bg-gradient-to-r from-amber-400 to-amber-600"
-              : "bg-gradient-to-r from-blue-500 to-indigo-600"
-            }`}>
-              <Target className="w-5 h-5 text-white" />
-            </div>
+            {/* Use the uploaded favicon as the logo mark */}
+            <img
+              src="/favicon.ico"
+              alt="CareerPilot AI Logo"
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-md"
+            />
             <span className={`text-2xl font-bold ${isDarkMode ? "text-white" : "text-gray-800"}`}>
               CareerPilot AI
             </span>

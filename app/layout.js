@@ -9,11 +9,13 @@ export const metadata = {
   title: "CareerPilot AI - Your Career Companion",
   description: "AI-powered career guidance and job preparation platform",
   icons: {
+    // Prefer the uploaded favicon.ico for all platforms; keep a single source of truth
     icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', type: 'image/x-icon' },
       { url: '/favicon.ico', sizes: 'any' }
     ],
-    apple: '/apple-icon.svg',
+    // If a dedicated Apple touch icon PNG is added later (e.g., /apple-touch-icon.png), we can point to it here
+    apple: '/favicon.ico',
   },
 };
 
