@@ -1,7 +1,7 @@
 "use client";
 import { Book, ChevronRight, Code, Video } from "lucide-react";
 import { useEffect, useState } from "react";
-import dynamicImport from "next/dynamic";
+import nextDynamic from 'next/dynamic';
 import { Button } from "../../../../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card";
 import {
@@ -20,7 +20,7 @@ import ChapterExam from "./components/ChapterExam";
 import CheatSheet from "./components/CheatSheet";
 
 // Dynamic imports to avoid SSR issues
-const YouTube = dynamicImport(() => import("react-youtube"), { ssr: false });
+const YouTube = nextDynamic(() => import("react-youtube"), { ssr: false });
 import Doubt from "./components/Doubt";
 import FixBug from "./components/FixBug";
 import InterviewQuestionUI from "./components/InterviewQuestion";
@@ -34,13 +34,7 @@ const CoursePage = () => {
   const [restart, setRestart] = useState(false);
   const [activeChapterlocal, setActiveChapterlocal] = useState(5);
   const [expandChapter, setExpandChapter] = useState("");
-  const [activeChapter, setActiveChapter] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedChapter = localStorage.getItem("activeChapter");
-      return savedChapter ? parseInt(savedChapter, 10) : 0;
-    }
-    return 0;
-  });
+  const [activeChapter, setActiveChapter] = useState(0);
   const [complete, setComplete] = useState(false);
   // const [loading, setLoading] = useState(false);
   const [chapterExam, setChapterExam] = useState("");
@@ -49,11 +43,21 @@ const CoursePage = () => {
   const [topicName, setTopicName] = useState("");
   const [combinedChapterData, setCombinedChapterData] = useState(null);
   
-  // Initialize data on client side
+  // Initialize all localStorage data on client side
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const data = localStorage.getItem("combinedChapterData");
       setCombinedChapterData(data ? JSON.parse(data) : null);
+      
+      const savedChapter = localStorage.getItem("activeChapter");
+      if (savedChapter) {
+        setActiveChapter(parseInt(savedChapter, 10));
+      }
+      
+      const formData = JSON.parse(localStorage.getItem("formData") || "{}");
+      if (formData) {
+        setLanguage(formData.video_language);
+      }
     }
   }, []);
   const [expand, setExpand] = useState(true);
@@ -106,15 +110,6 @@ const CoursePage = () => {
   });
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("");
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const formData = JSON.parse(localStorage.getItem("formData") || "{}");
-      if (formData) {
-        setLanguage(formData.video_language);
-      }
-    }
-  }, []);
 
   // Speech-to-text state
   const [speechError, setSpeechError] = useState(null);
@@ -222,7 +217,9 @@ const CoursePage = () => {
   useEffect(() => {
     setCheat(false), setInterview(false), setView(false), setEnggaging(false);
     if (!combinedChapterData && typeof window !== 'undefined') {
-      window.location.replace("/learn/course");
+      if (typeof window !== 'undefined') {
+        window.location.replace("/learn/course");
+      }
     }
   }, []);
 
@@ -337,7 +334,9 @@ const CoursePage = () => {
       const responseText = result.response.text();
       console.log(responseText);
       const json = JSON.parse(responseText);
-      localStorage.setItem("PreacticeQuestion", JSON.stringify(json));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("PreacticeQuestion", JSON.stringify(json));
+      }
       setPractice(json);
       setView(true);
     } catch (error) {
@@ -360,7 +359,9 @@ const CoursePage = () => {
       const result = await AiEngagingContent.sendMessage(prompt);
       const responseText = await result.response.text();
       const json = JSON.parse(responseText);
-      localStorage.setItem("engagingContent", JSON.stringify(json));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("engagingContent", JSON.stringify(json));
+      }
       console.log(json);
       setEnggagingContent(json);
       setEnggaging(true);
@@ -384,7 +385,9 @@ const CoursePage = () => {
       const result2 = await AiInter.sendMessage(prompt2);
       const responseText2 = await result2.response.text();
       const json2 = JSON.parse(responseText2);
-      localStorage.setItem("TopicInterviewQuestion", JSON.stringify(json2));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("TopicInterviewQuestion", JSON.stringify(json2));
+      }
       setEnggagingContent2(json2);
       setInterview(true);
     } catch (error) {
@@ -1053,7 +1056,8 @@ const CoursePage = () => {
   );
 };
 
-// Disable static generation for this page
+// Force dynamic rendering to prevent SSR issues
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export default CoursePage;
