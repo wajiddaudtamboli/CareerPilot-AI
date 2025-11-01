@@ -9,12 +9,18 @@ export const metadata = {
   title: "CareerPilot AI - Your Career Companion",
   description: "AI-powered career guidance and job preparation platform",
   icons: {
-    // Use user-provided PNG favicons (synced to /public via prebuild script) and keep .ico as fallback
+    // Primary favicon hosted on Cloudinary with local fallbacks
     icon: [
+      { url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png', type: 'image/png' },
+      { url: '/favicon.ico', type: 'image/x-icon' },
       { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
-      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
-      { url: '/favicon.ico', type: 'image/x-icon' }
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' }
     ],
+    // Shortcut icon for broader browser support
+    shortcut: [
+      'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png'
+    ],
+    // Keep existing Apple touch icon
     apple: '/apple-touch-icon.png',
   },
 };

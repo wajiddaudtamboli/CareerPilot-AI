@@ -246,8 +246,13 @@ function NavBar() {
                 </div>
               )}
             </div>
-            <Link
-              href={"/careerplanning?page=DepartmentJobRoles"}
+            <a
+              href="/career-planning"
+              onClick={(e) => {
+                // ensure navigation goes to the production route and is handled consistently across devices
+                e.preventDefault();
+                window.location.href = "/career-planning";
+              }}
               className={`px-6 py-2 rounded-full font-bold transition-all duration-200 transform hover:scale-105 shadow-lg ${
                 isDarkMode
                 ? "bg-gray-600 hover:bg-gray-700 text-white"
@@ -255,8 +260,8 @@ function NavBar() {
               }`}
               style={{ color: 'white' }}
             >
-                            Get Started
-            </Link>
+              Get Started
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -333,18 +338,23 @@ function NavBar() {
                 )}
               </div>
             ))}
-            <Link
-              href={"/careerplanning?page=DepartmentJobRoles"}
+            <a
+              href="/career-planning"
+              onClick={(e) => {
+                e.preventDefault();
+                // close the mobile menu first
+                handleLinkClick();
+                window.location.href = "/career-planning";
+              }}
               className={`block w-full text-center py-3 rounded-md font-bold transition-colors duration-200 ${
                 isDarkMode
                 ? "bg-gray-600 hover:bg-gray-700 text-white"
                 : "bg-green-600 hover:bg-green-700 text-white"
               }`}
               style={{ color: 'white' }}
-              onClick={handleLinkClick}
             >
               Get Started
-            </Link>
+            </a>
             
             {/* Mobile Authentication */}
             {!isSignedIn ? (

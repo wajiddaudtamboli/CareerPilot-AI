@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import { ThemeContext } from "./components/ThemeContext";
 import { useUser } from '@clerk/nextjs';
 
@@ -21,6 +22,7 @@ export default function JobPrepHomepage() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const { isDarkMode } = useContext(ThemeContext);
   const { isSignedIn } = useUser();
+  const router = useRouter();
 
   const testimonials = [
     {
@@ -158,7 +160,7 @@ export default function JobPrepHomepage() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <button 
-                  onClick={() => window.open('http://localhost:3001/', '_blank')}
+                  onClick={() => router.push('/careerplanning?page=DepartmentJobRoles')}
                   className={`group ${
                   isDarkMode
                     ? "bg-gray-600 hover:bg-gray-700 text-white"

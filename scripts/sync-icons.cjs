@@ -34,4 +34,25 @@ for (const f of files) {
   }
 }
 
+// Ensure a local backup path /public/xyz/favicon.png exists (used as a shortcut fallback)
+const backupDir = path.join(pub, 'xyz');
+try {
+  if (!fs.existsSync(backupDir)) {
+    fs.mkdirSync(backupDir, { recursive: true });
+  }
+  const primarySource = path.join(pub, 'favicon-32x32.png');
+  const backupDest = path.join(backupDir, 'favicon.png');
+  if (fs.existsSync(primarySource)) {
+    fs.copyFileSync(primarySource, backupDest);
+  } else {
+    // if the primary source wasn't copied into public yet, try copying from repo root if available
+    const altSource = path.join(root, 'favicon-32x32.png');
+    if (fs.existsSync(altSource)) {
+      fs.copyFileSync(altSource, backupDest);
+    }
+  }
+} catch (e) {
+  console.warn(`[sync-icons] Failed to create backup favicon: ${e.message}`);
+}
+
 console.log(`[sync-icons] Copied ${copied} icon file(s) into public/`);
