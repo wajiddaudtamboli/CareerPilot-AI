@@ -158,10 +158,10 @@ The app is designed to work even without all API keys:
 
 ## Getting Started
 
-### Prerequisites
+## Prerequisites
 
-- Node.js 18.17.0 or higher
-- npm 9.0.0 or higher
+- Node.js 22.x (required by Vercel)
+- npm 10+ (recommended)
 - Google Gemini API Key
 
 ### Installation
