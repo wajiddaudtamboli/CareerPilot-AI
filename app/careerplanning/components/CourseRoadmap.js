@@ -1,3 +1,4 @@
+"use client";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import {
     BookOpen,
@@ -10,7 +11,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { geminiModel } from '../../../config/AiModels';
-import { db } from "../../../lib/firebaseConfig";
+import { db, isFirebaseEnabled } from "../../../lib/firebaseConfig";
 
 function CourseRoadmap() {
   const [expandedModule, setExpandedModule] = useState(0);
@@ -76,22 +77,25 @@ function CourseRoadmap() {
       const responseText = await result.response.text();
       const parsedResult = JSON.parse(responseText);
 
-      // Check if roadmap already exists
-      const q = query(
-        collection(db, "courseroadmap"),
-        where("title", "==", parsedResult.title)
-      );
-      const querySnapshot = await getDocs(q);
+      // Persist only if Firebase is configured
+      if (isFirebaseEnabled && db) {
+        const q = query(
+          collection(db, "courseroadmap"),
+          where("title", "==", parsedResult.title)
+        );
+        const querySnapshot = await getDocs(q);
 
-      if (querySnapshot.empty) {
-        // If not found, store it
-        await addDoc(collection(db, "courseroadmap"), {
-          ...parsedResult,
-          timestamp: new Date(),
-        });
-        console.log("Roadmap stored in Firestore");
+        if (querySnapshot.empty) {
+          await addDoc(collection(db, "courseroadmap"), {
+            ...parsedResult,
+            timestamp: new Date(),
+          });
+          console.log("Roadmap stored in Firestore");
+        } else {
+          console.log("Roadmap already exists in Firestore");
+        }
       } else {
-        console.log("Roadmap already exists in Firestore");
+        console.log("Skipping Firestore persistence (Firebase disabled)");
       }
 
       setRoadmap(parsedResult);

@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   Select,
@@ -14,7 +15,7 @@ import { GrUserExpert } from "react-icons/gr";
 
 import LoadingDialog from "../../../components/LoadingDialog";
 import { AiMockInterview } from '../../../../config/AiModels';
-import { db } from "../../../../lib/firebaseConfig";
+import { db, isFirebaseEnabled } from "../../../../lib/firebaseConfig";
 import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid"; // For unique ID
 
@@ -74,13 +75,17 @@ function DetailForm({ setOk, setQuestions }) {
         const uniqueId = uuidv4();
 
         // Store in Firestore with document ID = mockId
-        await setDoc(doc(db, "mockinterview", uniqueId), {
-          mockId: uniqueId,
-          ...formData,
-          jobDescription: desc,
-          questions: response,
-          timestamp: new Date(),
-        });
+        if (isFirebaseEnabled && db) {
+          await setDoc(doc(db, "mockinterview", uniqueId), {
+            mockId: uniqueId,
+            ...formData,
+            jobDescription: desc,
+            questions: response,
+            timestamp: new Date(),
+          });
+        } else {
+          console.log("Skipping Firestore save (Firebase disabled)");
+        }
 
         setQuestions(response);
         setOk(true);
