@@ -16,6 +16,7 @@
     "node": "22.x"
   },
   "scripts": {
+  "prebuild": "node scripts/sync-icons.cjs",
     "dev": "next dev",
     "dev:turbo": "next dev --turbo",
     "dev:clean": "rimraf .next && next dev",

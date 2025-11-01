@@ -9,13 +9,13 @@ export const metadata = {
   title: "CareerPilot AI - Your Career Companion",
   description: "AI-powered career guidance and job preparation platform",
   icons: {
-    // Prefer the uploaded favicon.ico for all platforms; keep a single source of truth
+    // Use user-provided PNG favicons (synced to /public via prebuild script) and keep .ico as fallback
     icon: [
-      { url: '/favicon.ico', type: 'image/x-icon' },
-      { url: '/favicon.ico', sizes: 'any' }
+      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+      { url: '/favicon.ico', type: 'image/x-icon' }
     ],
-    // If a dedicated Apple touch icon PNG is added later (e.g., /apple-touch-icon.png), we can point to it here
-    apple: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 };
 

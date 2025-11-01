@@ -121,7 +121,7 @@ function NavBar() {
           >
             {/* Use the uploaded favicon as the logo mark */}
             <img
-              src="/favicon.ico"
+              src="/favicon-32x32.png"
               alt="CareerPilot AI Logo"
               width={32}
               height={32}
