@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Output configuration
+  output: 'standalone',
+  
   // Experimental features for Next.js 15.5.3
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],

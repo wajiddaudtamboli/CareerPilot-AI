@@ -1056,8 +1056,9 @@ const CoursePage = () => {
   );
 };
 
-// Force dynamic rendering to prevent SSR issues
-export const runtime = 'nodejs';
+// Force dynamic rendering - disable static generation completely
 export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const revalidate = 0;
 
 export default CoursePage;
