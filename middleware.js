@@ -34,9 +34,12 @@ const isPublicRoute = createRouteMatcher([
 export default clerkMiddleware(async (auth, request) => {
   // Force favicon.ico to use the Cloudinary PNG (avoid serving any .ico)
   if (request.nextUrl.pathname === '/favicon.ico') {
-    return NextResponse.redirect('https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png', {
-      status: 308,
-    });
+    const res = NextResponse.redirect('https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2', { status: 308 });
+    // Explicitly disable caching to force Chrome to refetch the PNG
+    res.headers.set('Cache-Control', 'no-store, max-age=0, must-revalidate');
+    res.headers.set('Pragma', 'no-cache');
+    res.headers.set('Expires', '0');
+    return res;
   }
   // Protect dashboard and other private routes
   if (!isPublicRoute(request)) {

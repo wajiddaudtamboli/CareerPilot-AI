@@ -11,13 +11,13 @@ export const metadata = {
   icons: {
     // Primary favicon hosted on Cloudinary with local PNG fallbacks (no .ico)
     icon: [
-      { url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png', type: 'image/png' },
-      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
-      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' }
+      { url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2', type: 'image/png' },
+      { url: '/favicon-32x32.png?v=2', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16x16.png?v=2', type: 'image/png', sizes: '16x16' }
     ],
     // Shortcut icon for broader browser support
     shortcut: [
-      'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png'
+      'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2'
     ],
     // Keep existing Apple touch icon
     apple: '/apple-touch-icon.png',
@@ -27,7 +27,7 @@ export const metadata = {
     description: 'AI-powered career guidance and job preparation platform',
     images: [
       {
-        url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png',
+        url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2',
         width: 512,
         height: 512,
         alt: 'CareerPilot AI',
@@ -39,7 +39,7 @@ export const metadata = {
     title: 'CareerPilot AI - Your Career Companion',
     description: 'AI-powered career guidance and job preparation platform',
     images: [
-      'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png',
+      'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2',
     ],
   },
 };
@@ -65,6 +65,8 @@ export default function RootLayout({ children }) {
       <html lang="en" suppressHydrationWarning>
         <head>
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+          {/* Preconnect to Cloudinary for faster icon load */}
+          <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         </head>
         <body>
           <Providers>

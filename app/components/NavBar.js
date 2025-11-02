@@ -246,17 +246,7 @@ function NavBar() {
                 </div>
               )}
             </div>
-            <Link
-              href={"/careerplanning?page=DepartmentJobRoles"}
-              className={`px-6 py-2 rounded-full font-bold transition-all duration-200 transform hover:scale-105 shadow-lg ${
-                isDarkMode
-                ? "bg-gray-600 hover:bg-gray-700 text-white"
-                : "bg-green-600 hover:bg-green-700 text-white"
-              }`}
-              style={{ color: 'white' }}
-            >
-                            Get Started
-            </Link>
+            {/* Removed Get Started CTA to eliminate layout gap on small devices in desktop mode */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -333,18 +323,7 @@ function NavBar() {
                 )}
               </div>
             ))}
-            <Link
-              href={"/careerplanning?page=DepartmentJobRoles"}
-              className={`block w-full text-center py-3 rounded-md font-bold transition-colors duration-200 ${
-                isDarkMode
-                ? "bg-gray-600 hover:bg-gray-700 text-white"
-                : "bg-green-600 hover:bg-green-700 text-white"
-              }`}
-              style={{ color: 'white' }}
-              onClick={handleLinkClick}
-            >
-              Get Started
-            </Link>
+            {/* Removed Get Started CTA in mobile menu */}
             
             {/* Mobile Authentication */}
             {!isSignedIn ? (

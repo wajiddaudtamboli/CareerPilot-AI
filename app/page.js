@@ -279,14 +279,19 @@ export default function JobPrepHomepage() {
         </div>
       </section>
 
-      {/* Phases Section */}
+      {/* Phases Section (optimized) */}
       <section className="flex justify-center">
         <Image
           src="/phases.png"
           height={800}
           width={1000}
           alt="phases"
-          priority
+          priority={false}
+          loading="lazy"
+          sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 1000px"
+          className="w-full h-auto max-w-[1000px]"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HwAFgwJ/l9tZ4QAAAABJRU5ErkJggg=="
         />
       </section>
 
