@@ -9,25 +9,23 @@ export const metadata = {
   title: "CareerPilot AI - Your Career Companion",
   description: "AI-powered career guidance and job preparation platform",
   icons: {
-    // Primary favicon hosted on Cloudinary with local PNG fallbacks (no .ico)
+    // Use local folder icons (no external Cloudinary) and bust cache with v=3
     icon: [
-      { url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2', type: 'image/png' },
-      { url: '/favicon-32x32.png?v=2', type: 'image/png', sizes: '32x32' },
-      { url: '/favicon-16x16.png?v=2', type: 'image/png', sizes: '16x16' }
+      { url: '/favicon-32x32.png?v=3', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16x16.png?v=3', type: 'image/png', sizes: '16x16' },
+      { url: '/android-chrome-192x192.png?v=3', type: 'image/png', sizes: '192x192' }
     ],
     // Shortcut icon for broader browser support
-    shortcut: [
-      'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2'
-    ],
-    // Keep existing Apple touch icon
-    apple: '/apple-touch-icon.png',
+    shortcut: ['/favicon-32x32.png?v=3'],
+    // Apple touch icon (PWA/IOS)
+    apple: '/apple-touch-icon.png?v=3',
   },
   openGraph: {
     title: 'CareerPilot AI - Your Career Companion',
     description: 'AI-powered career guidance and job preparation platform',
     images: [
       {
-        url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2',
+        url: '/android-chrome-512x512.png?v=3',
         width: 512,
         height: 512,
         alt: 'CareerPilot AI',
@@ -38,9 +36,7 @@ export const metadata = {
     card: 'summary',
     title: 'CareerPilot AI - Your Career Companion',
     description: 'AI-powered career guidance and job preparation platform',
-    images: [
-      'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png?v=2',
-    ],
+    images: ['/android-chrome-512x512.png?v=3'],
   },
 };
 
@@ -65,8 +61,6 @@ export default function RootLayout({ children }) {
       <html lang="en" suppressHydrationWarning>
         <head>
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
-          {/* Preconnect to Cloudinary for faster icon load */}
-          <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         </head>
         <body>
           <Providers>

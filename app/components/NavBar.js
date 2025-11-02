@@ -119,9 +119,9 @@ function NavBar() {
             }}
             className="flex items-center space-x-2 cursor-pointer"
           >
-            {/* Use the uploaded favicon as the logo mark */}
+            {/* Use the local folder favicon as the logo mark */}
             <img
-              src="/favicon-32x32.png"
+              src="/favicon-32x32.png?v=3"
               alt="CareerPilot AI Logo"
               width={32}
               height={32}
