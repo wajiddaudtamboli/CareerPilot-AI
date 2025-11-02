@@ -18,6 +18,10 @@ const componentMap = {
   CodingRound: dynamic(() =>
     import("./components/CodingRound")
   ),
+  // New: Tools Used in Company (profession search powered by Gemini)
+  ToolsUsedInCompany: dynamic(() =>
+    import("./components/ToolsUsedInCompany")
+  ),
 };
 
 const PreparationContent = () => {

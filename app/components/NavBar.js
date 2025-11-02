@@ -19,10 +19,7 @@ function NavBar() {
     {
       name: "Career Planning",
       submenu: [
-        {
-          name: "Department Roles",
-          href: "/careerplanning?page=DepartmentJobRoles",
-        },
+        { name: "Department Roles", href: "/careerplanning?page=DepartmentJobRoles" },
         { name: "Role Selection", href: "/careerplanning/checkcareer" },
         { name: "Role Roadmap", href: "/careerplanning?page=RoleRoadMap" },
       ],
@@ -30,7 +27,7 @@ function NavBar() {
     {
       name: "Learn",
       submenu: [
-        { name: "Courses", href: "/learn?page=Courses" },
+        { name: "Courses", href: "/learn?page=CoursesExplore" },
         { name: "Roadmaps", href: "/learn?page=Roadmaps" },
         { name: "Recall", href: "/learn/recall" },
         { name: "Test Ability", href: "/learn?page=TestAbility" },
@@ -135,7 +132,7 @@ function NavBar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             <Link
-              href={"/home"}
+              href={"/"}
               className={`flex items-center space-x-1 transition-colors duration-200 py-2 ${
                 isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-blue-600"
               }`}

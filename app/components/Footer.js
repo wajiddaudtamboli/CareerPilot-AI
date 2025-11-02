@@ -218,7 +218,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/careerplanning"
+                    href="/careerplanning?page=DepartmentJobRoles"
                     className={`group inline-block text-base transition-all duration-300 relative font-bold ${
                       isDarkMode
                         ? "text-gray-300 hover:text-amber-400"
@@ -239,7 +239,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/preparation"
+                    href="/learn?page=CoursesExplore"
                     className={`group inline-block text-base transition-all duration-300 relative font-bold ${
                       isDarkMode
                         ? "text-gray-300 hover:text-amber-400"
@@ -260,7 +260,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/learn"
+                    href="/preparation/mockinterview"
                     className={`group inline-block text-base transition-all duration-300 relative font-bold ${
                       isDarkMode
                         ? "text-gray-300 hover:text-amber-400"
@@ -281,7 +281,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/company"
+                    href="/company/home"
                     className={`group inline-block text-base transition-all duration-300 relative font-bold ${
                       isDarkMode
                         ? "text-gray-300 hover:text-amber-400"
