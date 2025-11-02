@@ -106,7 +106,7 @@ function NavBar() {
   };
 
   return (
-    <nav className={`relative z-50 ${isDarkMode
+    <nav className={`relative z-[9999] ${isDarkMode
       ? "bg-black/95 backdrop-blur-md border-b border-gray-800"
       : "bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm"}`}
     >

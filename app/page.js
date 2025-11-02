@@ -119,7 +119,7 @@ export default function JobPrepHomepage() {
 
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className={`absolute inset-0 ${
+        <div className={`absolute inset-0 pointer-events-none ${
           isDarkMode
             ? "bg-black"
             : "bg-gradient-to-r from-blue-100/20 to-indigo-100/20"
@@ -216,12 +216,12 @@ export default function JobPrepHomepage() {
                   ? "bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700"
                   : "bg-gradient-to-br from-blue-50/80 to-indigo-50/80 border border-blue-200"
                 } backdrop-blur-sm rounded-3xl p-8`}>
-                <div className={`absolute -top-4 -right-4 w-24 h-24 ${
+                <div className={`absolute -top-4 -right-4 w-24 h-24 pointer-events-none ${
                   isDarkMode
                     ? "bg-gradient-to-r from-gray-600/20 to-gray-700/20"
                     : "bg-gradient-to-r from-blue-400/20 to-indigo-400/20"
                   } rounded-full opacity-20 animate-bounce`}></div>
-                <div className={`absolute -bottom-4 -left-4 w-16 h-16 ${
+                <div className={`absolute -bottom-4 -left-4 w-16 h-16 pointer-events-none ${
                   isDarkMode
                     ? "bg-gradient-to-r from-gray-700/20 to-gray-600/20"
                     : "bg-gradient-to-r from-indigo-400/20 to-blue-400/20"
