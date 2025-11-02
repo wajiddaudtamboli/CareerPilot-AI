@@ -3,13 +3,32 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { ThemeContext } from "../../components/ThemeContext";
 import { Dialog, DialogContent, DialogTrigger } from "../../../components/ui/dialog.jsx";
 
-const YT_LINKS = [
-  "https://youtu.be/4WjtQjPQGIs?si=z_K7HEkDqHtzAgat",
-  "https://youtu.be/-WN74rN9OPI?si=5HWUSiRwyAZNuVYU",
-  "https://youtu.be/-n2rVJE4vto?si=PidI1QdlOww6Icm5",
-  "https://youtu.be/VTLCoHnyACE?si=DplNf4QdlXGt0fUv",
-  "https://youtu.be/yBcfzZJ-gS8?si=WZa_UgIhdpoqy0-b",
-  "https://youtu.be/-DzowlcaUmE?si=HErFWS1_lcgc0fcj",
+// Static fallbacks so titles always show even if oEmbed fails in production
+const VIDEOS = [
+  {
+    url: "https://youtu.be/4WjtQjPQGIs?si=z_K7HEkDqHtzAgat",
+    title: "Web Development Complete RoadMap for 2025 | from Basics to Advanced",
+  },
+  {
+    url: "https://youtu.be/-WN74rN9OPI?si=5HWUSiRwyAZNuVYU",
+    title: "Exercise 4 - Multi Color Website | Sigma Web Development Course - Tutorial #33",
+  },
+  {
+    url: "https://youtu.be/-n2rVJE4vto?si=PidI1QdlOww6Icm5",
+    title: "Introduction to Stack in Data Structures",
+  },
+  {
+    url: "https://youtu.be/VTLCoHnyACE?si=DplNf4QdlXGt0fUv",
+    title: "Lecture 1: Flowchart & Pseudocode + Installation | DSA Series by Shradha Khapra Ma'am | C++",
+  },
+  {
+    url: "https://youtu.be/yBcfzZJ-gS8?si=WZa_UgIhdpoqy0-b",
+    title: "The Complete Data Science Roadmap (Get Hired in 2025)",
+  },
+  {
+    url: "https://youtu.be/-DzowlcaUmE?si=HErFWS1_lcgc0fcj",
+    title: "Binary Tree in Data Structures | All about Binary Tree | DSA Course",
+  },
 ];
 
 function toEmbedUrl(url) {
@@ -29,14 +48,14 @@ export default function CoursesExplore() {
       setLoading(true);
       try {
         const results = await Promise.all(
-          YT_LINKS.map(async (u) => {
+          VIDEOS.map(async ({ url: u, title: fallbackTitle }) => {
             try {
               const r = await fetch(`/api/youtube/oembed?url=${encodeURIComponent(u)}`);
               if (!r.ok) throw new Error('oEmbed failed');
               const j = await r.json();
               return [u, j];
             } catch {
-              return [u, { title: 'YouTube Video', thumbnail_url: `https://i.ytimg.com/vi/${(toEmbedUrl(u)||'').split('/').pop()}/hqdefault.jpg` }];
+              return [u, { title: fallbackTitle, thumbnail_url: `https://i.ytimg.com/vi/${(toEmbedUrl(u)||'').split('/').pop()}/hqdefault.jpg` }];
             }
           })
         );
@@ -59,8 +78,8 @@ export default function CoursesExplore() {
         <p className="opacity-80 mb-8">Curated video lessons. Click a card to watch.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {YT_LINKS.map((url) => {
-            const m = meta[url] || {};
+          {VIDEOS.map(({ url, title }) => {
+            const m = meta[url] || { title };
             const embed = toEmbedUrl(url);
             return (
               <Dialog key={url}>
@@ -75,7 +94,7 @@ export default function CoursesExplore() {
                       )}
                     </div>
                     <div className="p-3">
-                      <h3 className="font-medium line-clamp-2">{m.title || 'YouTube Video'}</h3>
+                      <h3 className="font-medium line-clamp-2">{m.title || title}</h3>
                     </div>
                   </button>
                 </DialogTrigger>
@@ -85,7 +104,7 @@ export default function CoursesExplore() {
                       <iframe
                         className="w-full h-full rounded-md"
                         src={`${embed}?autoplay=1`}
-                        title={m.title || 'Course video'}
+                        title={m.title || title || 'Course video'}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
