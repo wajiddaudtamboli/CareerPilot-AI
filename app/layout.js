@@ -9,10 +9,9 @@ export const metadata = {
   title: "CareerPilot AI - Your Career Companion",
   description: "AI-powered career guidance and job preparation platform",
   icons: {
-    // Primary favicon hosted on Cloudinary with local fallbacks
+    // Primary favicon hosted on Cloudinary with local PNG fallbacks (no .ico)
     icon: [
       { url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png', type: 'image/png' },
-      { url: '/favicon.ico', type: 'image/x-icon' },
       { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
       { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' }
     ],
@@ -22,6 +21,26 @@ export const metadata = {
     ],
     // Keep existing Apple touch icon
     apple: '/apple-touch-icon.png',
+  },
+  openGraph: {
+    title: 'CareerPilot AI - Your Career Companion',
+    description: 'AI-powered career guidance and job preparation platform',
+    images: [
+      {
+        url: 'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png',
+        width: 512,
+        height: 512,
+        alt: 'CareerPilot AI',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'CareerPilot AI - Your Career Companion',
+    description: 'AI-powered career guidance and job preparation platform',
+    images: [
+      'https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png',
+    ],
   },
 };
 

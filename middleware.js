@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
 // Define public routes that don't require authentication
 const isPublicRoute = createRouteMatcher([
@@ -31,6 +32,12 @@ const isPublicRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, request) => {
+  // Force favicon.ico to use the Cloudinary PNG (avoid serving any .ico)
+  if (request.nextUrl.pathname === '/favicon.ico') {
+    return NextResponse.redirect('https://res.cloudinary.com/duhhsnbwh/image/upload/v1762023745/GeKh4Y0IKf_poixqp.png', {
+      status: 308,
+    });
+  }
   // Protect dashboard and other private routes
   if (!isPublicRoute(request)) {
     await auth.protect();
@@ -40,8 +47,10 @@ export default clerkMiddleware(async (auth, request) => {
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|csv|docx?|xlsx?|zip|webmanifest)).*)',
     // Always run for API routes
     '/(api|trpc)(.*)',
+    // Explicitly include favicon.ico so we can redirect it
+    '/favicon.ico',
   ],
 };
