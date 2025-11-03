@@ -10,8 +10,8 @@ const VIDEOS = [
     title: "Web Development Complete RoadMap for 2025 | from Basics to Advanced",
   },
   {
-    url: "https://youtu.be/-WN74rN9OPI?si=5HWUSiRwyAZNuVYU",
-    title: "Exercise 4 - Multi Color Website | Sigma Web Development Course - Tutorial #33",
+    url: "https://youtu.be/tVzUXW6siu0?si=YKDvPIViNZsTLgqi",
+    title: "Web Development Course (Updated)",
   },
   {
     url: "https://youtu.be/-n2rVJE4vto?si=PidI1QdlOww6Icm5",
@@ -28,6 +28,23 @@ const VIDEOS = [
   {
     url: "https://youtu.be/-DzowlcaUmE?si=HErFWS1_lcgc0fcj",
     title: "Binary Tree in Data Structures | All about Binary Tree | DSA Course",
+  },
+  // New additions
+  {
+    url: "https://youtu.be/0HYqI8qtaG4?si=2zF0N68UVfxiE_Gi",
+    title: "100 Days Cloud Challenge",
+  },
+  {
+    url: "https://youtu.be/-0X0BHLE0Dg?si=t9XoHrXin4Ws5NJe",
+    title: "Java Setup in VS Code",
+  },
+  {
+    url: "https://youtu.be/onyB_X3zk6o?si=95zd4TL9oafIqCKA",
+    title: "How to Become a UI/UX Designer",
+  },
+  {
+    url: "https://youtu.be/irqbmMNs2Bo?si=1hHO9Fo3egtm_ojl",
+    title: "C Language Tutorial for Beginners",
   },
 ];
 
