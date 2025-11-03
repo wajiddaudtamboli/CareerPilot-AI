@@ -40,6 +40,7 @@ function NavBar() {
         { name: "Mock Interview", href: "/preparation/mockinterview" },
         { name: "Soft Skills", href: "/preparation/softskill" },
         { name: "Coding Round", href: "/preparation/codinground" },
+        { name: "Tools Used in Company", href: "/preparation?page=ToolsUsedInCompany" },
       ],
     },
     {

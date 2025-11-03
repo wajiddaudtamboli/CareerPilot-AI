@@ -300,6 +300,27 @@ const Footer = () => {
                     }`}></span>
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/preparation?page=ToolsUsedInCompany"
+                    className={`group inline-block text-base transition-all duration-300 relative font-bold ${
+                      isDarkMode
+                        ? "text-gray-300 hover:text-amber-400"
+                        : "!text-white hover:!text-gray-100"
+                    }`}
+                    style={{
+                      fontFamily: "'Inter', 'Segoe UI', sans-serif",
+                      lineHeight: '1.5',
+                      fontWeight: 'bold',
+                      color: isDarkMode ? undefined : '#FFFFFF !important'
+                    }}
+                  >
+                    Tools Used in Company
+                    <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
+                      isDarkMode ? "bg-amber-400" : "bg-gray-100"
+                    }`}></span>
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
