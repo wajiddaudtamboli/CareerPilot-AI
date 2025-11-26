@@ -315,7 +315,6 @@ const Footer = () => {
                       color: isDarkMode ? undefined : '#FFFFFF !important'
                     }}
                   >
-                    Tools Used in Company
                     <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
                       isDarkMode ? "bg-amber-400" : "bg-gray-100"
                     }`}></span>

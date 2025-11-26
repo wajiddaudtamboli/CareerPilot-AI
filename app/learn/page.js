@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import ChatBot from "../components/ChatBot";
 
 const componentMap = {
-  Projects: dynamic(() => import("./components/Projects")),
+  Projects: dynamic(() => import("./components/RealCompanyProjects")), // Updated to use new enhanced component
   ToolsCompanyUse: dynamic(() =>
     import("./components/ToolsCompanyUse")
   ),
@@ -17,9 +17,12 @@ const componentMap = {
   Courses: dynamic(() => import("./components/CreateCourse")), // Add proper mapping for Courses
   CoursesExplore: dynamic(() => import("./components/CoursesExplore")),
   SoftSkill: dynamic(() => import("./components/SoftSkill")),
-  Roadmaps: dynamic(() => import("./components/Roadmaps")), // AI-powered career roadmaps
-  TestAbility: dynamic(() => import("./components/TestAbility")), // Test knowledge component
-  Recall: dynamic(() => import("./recall/components/Form")), // Recall learning component
+  // New comprehensive learning features
+  IndustryCertifications: dynamic(() => import("./components/IndustryCertifications")),
+  CompetitionsHackathons: dynamic(() => import("./components/CompetitionsHackathons")),
+  AptitudeLearningPlatforms: dynamic(() => import("./components/AptitudeLearningPlatforms")),
+  ProjectsPlatforms: dynamic(() => import("./components/ProjectsPlatforms")),
+  RealCompanyProjects: dynamic(() => import("./components/RealCompanyProjects")),
 };
 
 const LearnContent = () => {

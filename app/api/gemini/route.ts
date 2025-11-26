@@ -1,40 +1,29 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Configure the Gemini API
-const config = {
-  apiKey:
-    process.env.GOOGLE_GEMINI_API_KEY ||
-    'AIzaSyDOAtf0gqqMJpu5nVaSEbutTOpK_GZN7mo',
-};
+// Security: removed hardcoded API key. Use .env.local only.
+const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
 
-console.log('Environment check:', {
-  hasApiKey: !!config.apiKey,
-  keyLength: config.apiKey?.length,
-  keyPrefix: config.apiKey?.substring(0, 8),
-  fromEnv: !!process.env.GOOGLE_GEMINI_API_KEY,
+// Basic environment diagnostics (non-sensitive)
+console.log('Gemini env check:', {
+  hasApiKey: !!apiKey,
+  keyLength: apiKey?.length,
+  fromEnv: !!apiKey,
 });
 
-// Check if we have a valid API key (not demo/temp/placeholder keys)
-const isValidApiKey =
-  config.apiKey &&
-  !config.apiKey.includes('demo') &&
-  !config.apiKey.includes('temp') &&
-  !config.apiKey.includes('AIzaSyDOAtf0gqqMJpu5nVaSEbutTOpK_GZN7mo') &&
-  !config.apiKey.includes('your_actual_gemini_api_key_here') &&
-  !config.apiKey.includes('placeholder') &&
-  config.apiKey.length > 30;
-
+// Validate API key format (length heuristic only)
+const isValidApiKey = !!apiKey && apiKey.length > 30;
 if (!isValidApiKey) {
-  console.warn('⚠️  Using fallback mode: No valid Gemini API key detected');
-  console.log('💡 To use real AI: Set GOOGLE_GEMINI_API_KEY in .env.local');
-} else {
-  console.log('✅ Valid Gemini API key detected');
+  console.warn('Gemini: Fallback mode (no valid API key). Set GOOGLE_GEMINI_API_KEY in .env.local');
 }
 
-const genAI = isValidApiKey
-  ? new GoogleGenerativeAI(config.apiKey || '')
-  : null;
+const genAI = isValidApiKey ? new GoogleGenerativeAI(apiKey!) : null;
+
+// Limits & helpers
+const MAX_PROMPT_CHARS = 6000; // protect against excessively large payloads
+function truncateForLog(input: string, max = 120) {
+  return input.length > max ? input.substring(0, max) + '…' : input;
+}
 
 // Simple fallback generator to avoid 500s in development when API key isn't set
 function getFallbackResponse(prompt: string): string {

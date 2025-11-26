@@ -11,16 +11,8 @@ const componentMap = {
   AptitudeExam: dynamic(() =>
     import("./components/AptitudeExam")
   ),
-
   CompanyProblem: dynamic(() =>
     import("./components/CompanyProblem")
-  ),
-  CodingRound: dynamic(() =>
-    import("./components/CodingRound")
-  ),
-  // New: Tools Used in Company (profession search powered by Gemini)
-  ToolsUsedInCompany: dynamic(() =>
-    import("./components/ToolsUsedInCompany")
   ),
 };
 
@@ -29,7 +21,7 @@ const PreparationContent = () => {
   const page_name = searchParams.get("page");
   const Component =
     componentMap[page_name] ||
-    dynamic(() => import("../components/Instruction"));
+    dynamic(() => import("./components/ModernAssessmentPortal"));
   return (
     <>
       <Component />

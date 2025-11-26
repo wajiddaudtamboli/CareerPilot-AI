@@ -17,6 +17,7 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { ThemeContext } from "./components/ThemeContext";
 import { useUser } from '@clerk/nextjs';
+import NewFeatureModules from './components/NewFeatureModules';
 
 export default function JobPrepHomepage() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -24,40 +25,40 @@ export default function JobPrepHomepage() {
   const { isSignedIn } = useUser();
   const router = useRouter();
 
-  const testimonials = [
+  const teamMembers = [
     {
       name: "Wajid Daud Tamboli",
-      role: "Full Stack Developer",
+      role: "Lead Developer & Founder",
       content:
-        "CareerPilot AI helped me land my dream job! The mock interviews were incredibly realistic.",
+        "Passionate about creating AI-powered solutions that transform career preparation and help students achieve their professional goals.",
       rating: 5,
     },
     {
       name: "Laxmi Javalkote",
-      role: "Frontend Developer",
+      role: "Frontend Engineer",
       content:
-        "The AI-powered feedback system identified my weak points and helped me improve rapidly.",
+        "Dedicated to building intuitive user experiences that make complex learning processes accessible and engaging for everyone.",
       rating: 5,
     },
     {
       name: "Shaikh Parvej",
-      role: "Backend Developer",
+      role: "Backend Architect",
       content:
-        "From zero to offer in 3 months. The structured learning path made all the difference.",
+        "Focused on developing scalable infrastructure that supports millions of learners in their journey to career success.",
       rating: 5,
     },
     {
       name: "Sakshi Madgundi",
-      role: "UI/UX Designer",
+      role: "UI/UX Design Lead",
       content:
-        "The mentorship and hands-on projects gave me confidence to crack tough interviews.",
+        "Committed to crafting beautiful, user-centered designs that enhance learning outcomes and create meaningful experiences.",
       rating: 5,
     },
     {
       name: "Bagwan Zaid",
-      role: "Research",
+      role: "AI Research Specialist",
       content:
-        "Diving into real-world challenges during the program boosted my skills and made me feel ready for any high-pressure interview.",
+        "Advancing machine learning algorithms to provide personalized career guidance and intelligent skill assessment for optimal learning paths.",
       rating: 5,
     },
   ];
@@ -65,50 +66,50 @@ export default function JobPrepHomepage() {
   const features = [
     {
       icon: Target,
-      title: "Personalized Learning Paths",
+      title: "Industry-Based Certifications",
       description:
-        "AI-driven curricula tailored to your target role and skill level",
+        "Get certified in AWS, Google Cloud, Microsoft Azure, and other industry-leading platforms",
     },
     {
       icon: Users,
-      title: "Mock Interviews",
+      title: "Real Company Projects",
       description:
-        "Practice with industry professionals and get real-time feedback",
+        "Work on actual problem statements from top companies like Google, Microsoft, and Meta",
     },
     {
       icon: BookOpen,
-      title: "Comprehensive Resources",
+      title: "Competitions & Hackathons",
       description:
-        "Curated materials covering technical skills, behavioral questions, and more",
+        "Participate in coding challenges, hackathons, and competitive programming events",
     },
     {
       icon: Zap,
-      title: "Speed Interview Prep",
-      description: "Quick daily challenges to keep your skills sharp",
+      title: "Aptitude Learning Platforms",
+      description: "Master quantitative, logical reasoning, and verbal ability with adaptive practice",
     },
     {
-      icon: Brain, // placeholder - update as needed
-      title: "AI-Powered Mentoring",
+      icon: Brain,
+      title: "AI-Powered Career Guidance",
       description:
-        "Provides personalized guidance using AI techniques like mBERT and XLM-R",
+        "Get personalized career recommendations using advanced ML algorithms and industry insights",
     },
     {
-      icon: ShieldCheck, // placeholder - update as needed
-      title: "Data Privacy and Security",
+      icon: ShieldCheck,
+      title: "Skill Assessment & Tracking",
       description:
-        "Ensures user data confidentiality and integrity during AI interactions",
+        "Comprehensive skill evaluations with progress tracking and improvement roadmaps",
     },
     {
-      icon: TrendingUp, // placeholder - update as needed
-      title: "Improved Learning Outcomes",
+      icon: TrendingUp,
+      title: "Industry Mentorship",
       description:
-        "Boosts student engagement and performance by up to 35% through adaptive learning paths",
+        "Connect with professionals from FAANG companies and leading tech organizations",
     },
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+      setCurrentTestimonial((prev) => (prev + 1) % teamMembers.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -160,25 +161,25 @@ export default function JobPrepHomepage() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <button 
-                  onClick={() => router.push('/careerplanning?page=DepartmentJobRoles')}
+                  onClick={() => router.push('/learn?page=IndustryCertifications')}
                   className={`group ${
                   isDarkMode
                     ? "bg-gray-600 hover:bg-gray-700 text-white"
                     : "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700"
                 } px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 flex items-center justify-center space-x-2`}>
-                  <span>Start Preparing Now</span>
+                  <span>Start Learning Now</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
 
                 <button 
-                  onClick={() => window.location.href = '/careerplanning?page=RoleRoadMap'}
+                  onClick={() => window.location.href = '/learn?page=RealCompanyProjects'}
                   className={`group ${
                   isDarkMode
                     ? "bg-gray-800/70 text-white hover:bg-gray-700/70"
                     : "bg-gray-100/80 backdrop-blur-sm text-gray-700 hover:bg-gray-200/80"
                 } px-8 py-4 rounded-full text-lg font-semibold transition-all flex items-center justify-center space-x-2`}>
                   <Play className="w-5 h-5" />
-                  <span>Get Demo</span>
+                  <span>Explore Projects</span>
                 </button>
               </div>
 
@@ -186,26 +187,34 @@ export default function JobPrepHomepage() {
                 <div className="text-center">
                   <div className={`text-3xl font-bold ${
                     isDarkMode ? "text-white" : "text-gray-900"
-                  }`}>50K+</div>
+                  }`}>15+</div>
                   <div className={`${
                     isDarkMode ? "text-gray-400" : "text-gray-600"
-                  }`}>Success Stories</div>
+                  }`}>Departments Supported</div>
                 </div>
                 <div className="text-center">
                   <div className={`text-3xl font-bold ${
                     isDarkMode ? "text-white" : "text-gray-900"
-                  }`}>95%</div>
+                  }`}>200+</div>
                   <div className={`${
                     isDarkMode ? "text-gray-400" : "text-gray-600"
-                  }`}>Success Rate</div>
+                  }`}>Job Roles Mapped</div>
                 </div>
                 <div className="text-center">
                   <div className={`text-3xl font-bold ${
                     isDarkMode ? "text-white" : "text-gray-900"
-                  }`}>500+</div>
+                  }`}>300+</div>
                   <div className={`${
                     isDarkMode ? "text-gray-400" : "text-gray-600"
-                  }`}>Companies</div>
+                  }`}>Roadmaps Generated</div>
+                </div>
+                <div className="text-center">
+                  <div className={`text-3xl font-bold ${
+                    isDarkMode ? "text-white" : "text-gray-900"
+                  }`}>1000+</div>
+                  <div className={`${
+                    isDarkMode ? "text-gray-400" : "text-gray-600"
+                  }`}>Active Users</div>
                 </div>
               </div>
             </div>
@@ -233,20 +242,20 @@ export default function JobPrepHomepage() {
                     <span className={`${
                       isDarkMode ? "text-white" : "text-gray-700"
                     }`}>
-                      Interview scheduled with Google
+                      AWS Certification achieved
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-6 h-6 text-green-400" />
                     <span className={`${
                       isDarkMode ? "text-white" : "text-gray-700"
-                    }`}>Mock interview completed</span>
+                    }`}>Company project completed</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-6 h-6 text-green-400" />
                     <span className={`${
                       isDarkMode ? "text-white" : "text-gray-700"
-                    }`}>Skills assessment passed</span>
+                    }`}>Hackathon competition won</span>
                   </div>
 
                   <div className={`${
@@ -257,10 +266,10 @@ export default function JobPrepHomepage() {
                     <div className="flex items-center justify-between mb-2">
                       <span className={`${
                         isDarkMode ? "text-gray-300" : "text-gray-600"
-                      }`}>Interview Readiness</span>
+                      }`}>Learning Progress</span>
                       <span className={`${
                         isDarkMode ? "text-gray-300" : "text-blue-600"
-                      } font-semibold`}>92%</span>
+                      } font-semibold`}>89%</span>
                     </div>
                     <div className={`w-full ${
                       isDarkMode ? "bg-gray-700" : "bg-gray-200"
@@ -269,7 +278,7 @@ export default function JobPrepHomepage() {
                         isDarkMode
                           ? "bg-gradient-to-r from-amber-400 to-amber-600"
                           : "bg-gradient-to-r from-purple-400 to-pink-400"
-                        } h-3 rounded-full w-[92%] animate-pulse`}></div>
+                        } h-3 rounded-full w-[89%] animate-pulse`}></div>
                     </div>
                   </div>
                 </div>
@@ -302,20 +311,19 @@ export default function JobPrepHomepage() {
             <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}>
-              Everything You Need to{" "}
+              Complete Learning{" "}
               <span className={`bg-gradient-to-r ${
                 isDarkMode
                   ? "from-gray-300 to-white"
                   : "from-blue-600 to-indigo-600"
               } bg-clip-text text-transparent`}>
-                Succeed
+                Ecosystem
               </span>
             </h2>
             <p className={`text-xl max-w-3xl mx-auto ${
               isDarkMode ? "text-gray-300" : "text-gray-600"
             }`}>
-              Our comprehensive platform provides all the tools and resources
-              you need to excel in your job search and interviews.
+              Master industry skills through certifications, real projects, competitions, and comprehensive aptitude training - everything you need for career success.
             </p>
           </div>
 
@@ -366,21 +374,19 @@ export default function JobPrepHomepage() {
                 <h3 className={`text-3xl md:text-4xl font-bold ${
                   isDarkMode ? "text-white" : "text-gray-900"
                 }`}>
-                  Master Interviews with{" "}
+                  Industry-Leading{" "}
                   <span className={`bg-gradient-to-r ${
                     isDarkMode
                       ? "from-gray-300 to-white"
                       : "from-blue-600 to-indigo-600"
                   } bg-clip-text text-transparent`}>
-                    AI Coaching
+                    Certifications
                   </span>
                 </h3>
                 <p className={`text-lg leading-relaxed ${
                   isDarkMode ? "text-gray-300" : "text-gray-600"
                 }`}>
-                  Practice with our advanced AI interviewer that adapts to your
-                  responses, provides real-time feedback, and simulates actual
-                  interview scenarios from top tech companies.
+                  Earn recognized certifications from AWS, Google Cloud, Microsoft Azure, and other leading platforms. Validate your skills with industry-standard credentials that employers trust.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3">
@@ -388,7 +394,7 @@ export default function JobPrepHomepage() {
                     <span className={`${
                       isDarkMode ? "text-gray-300" : "text-gray-600"
                     }`}>
-                      Real-time voice and video analysis
+                      AWS, Azure, GCP certified paths
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -396,7 +402,7 @@ export default function JobPrepHomepage() {
                     <span className={`${
                       isDarkMode ? "text-gray-300" : "text-gray-600"
                     }`}>
-                      Personalized improvement suggestions
+                      Industry-recognized credentials
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -404,12 +410,14 @@ export default function JobPrepHomepage() {
                     <span className={`${
                       isDarkMode ? "text-gray-300" : "text-gray-600"
                     }`}>
-                      500+ company-specific scenarios
+                      25+ certification programs
                     </span>
                   </div>
                 </div>
-                <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 flex items-center space-x-2">
-                  <span>Try AI Interview</span>
+                <button 
+                  onClick={() => router.push('/learn?page=IndustryCertifications')}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 flex items-center space-x-2">
+                  <span>Start Certification</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -423,24 +431,30 @@ export default function JobPrepHomepage() {
                     isDarkMode ? "bg-black/40" : "bg-white/90 border border-gray-200"
                   } rounded-2xl p-8 mb-6 shadow-lg`}>
                     <div className="flex items-center space-x-3 mb-6">
-                      <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                      <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
-                      <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                      <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">AWS</span>
+                      </div>
+                      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">AZ</span>
+                      </div>
+                      <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">GCP</span>
+                      </div>
                     </div>
                     <div className={`text-lg ${isDarkMode ? "text-white" : "text-gray-800"}`}>
-                      <div className="mb-4 font-medium">
-                        AI: &quot;Tell me about a challenging project you worked on.&quot;
+                      <div className="mb-4 font-bold text-xl">
+                        AWS Solutions Architect
                       </div>
-                      <div className={`${isDarkMode ? "text-purple-300" : "text-purple-600"} font-medium`}>
-                        You: &quot;In my previous role, I led a team to redesign...&quot;
+                      <div className={`${isDarkMode ? "text-green-300" : "text-green-600"} font-medium`}>
+                        ✓ Professional Level Certification
                       </div>
                       <div className={`mt-6 ${
-                        isDarkMode ? "bg-green-500/20" : "bg-green-100"
+                        isDarkMode ? "bg-blue-500/20" : "bg-blue-100"
                       } rounded-lg p-4`}>
                         <div className={`${
-                          isDarkMode ? "text-green-300" : "text-green-700"
+                          isDarkMode ? "text-blue-300" : "text-blue-700"
                         } text-sm font-medium`}>
-                          ✓ Great structure! Consider adding specific metrics...
+                          Next: Google Cloud Professional Developer
                         </div>
                       </div>
                     </div>
@@ -448,15 +462,15 @@ export default function JobPrepHomepage() {
                   <div className="flex items-center justify-between">
                     <span className={`font-semibold ${
                       isDarkMode ? "text-gray-300" : "text-gray-700"
-                    }`}>Confidence Score</span>
+                    }`}>Certification Progress</span>
                     <span className={`text-2xl font-black ${
                       isDarkMode ? "text-purple-400" : "text-purple-600"
-                    }`}>87%</span>
+                    }`}>3/25</span>
                   </div>
                   <div className={`w-full ${
                     isDarkMode ? "bg-gray-700" : "bg-gray-200"
                   } rounded-full h-3 mt-3`}>
-                    <div className="bg-gradient-to-r from-purple-400 to-pink-400 h-3 rounded-full w-[87%] shadow-lg"></div>
+                    <div className="bg-gradient-to-r from-purple-400 to-pink-400 h-3 rounded-full w-[12%] shadow-lg"></div>
                   </div>
                 </div>
               </div>
@@ -477,14 +491,14 @@ export default function JobPrepHomepage() {
                       <div className={`font-bold mb-2 text-lg ${
                         isDarkMode ? "text-white" : "text-gray-800"
                       }`}>
-                        JavaScript
+                        Google Project
                       </div>
                       <div className={`w-full ${
                         isDarkMode ? "bg-gray-700" : "bg-gray-200"
                       } rounded-full h-3`}>
-                        <div className="bg-green-500 h-3 rounded-full w-[92%] shadow-sm"></div>
+                        <div className="bg-green-500 h-3 rounded-full w-[100%] shadow-sm"></div>
                       </div>
-                      <div className="text-green-500 text-sm mt-2 font-semibold">Expert</div>
+                      <div className="text-green-500 text-sm mt-2 font-semibold">Completed</div>
                     </div>
                     <div className={`${
                       isDarkMode ? "bg-black/40" : "bg-white/90 border border-gray-200"
@@ -492,15 +506,15 @@ export default function JobPrepHomepage() {
                       <div className={`font-bold mb-2 text-lg ${
                         isDarkMode ? "text-white" : "text-gray-800"
                       }`}>
-                        System Design
+                        Meta Challenge
                       </div>
                       <div className={`w-full ${
                         isDarkMode ? "bg-gray-700" : "bg-gray-200"
                       } rounded-full h-3`}>
-                        <div className="bg-yellow-500 h-3 rounded-full w-[68%] shadow-sm"></div>
+                        <div className="bg-blue-500 h-3 rounded-full w-[75%] shadow-sm"></div>
                       </div>
-                      <div className="text-yellow-500 text-sm mt-2 font-semibold">
-                        Intermediate
+                      <div className="text-blue-500 text-sm mt-2 font-semibold">
+                        In Progress
                       </div>
                     </div>
                     <div className={`${
@@ -508,13 +522,13 @@ export default function JobPrepHomepage() {
                     } rounded-xl p-5 shadow-lg`}>
                       <div className={`font-bold mb-2 text-lg ${
                         isDarkMode ? "text-white" : "text-gray-800"
-                      }`}>React</div>
+                      }`}>Microsoft Task</div>
                       <div className={`w-full ${
                         isDarkMode ? "bg-gray-700" : "bg-gray-200"
                       } rounded-full h-3`}>
-                        <div className="bg-blue-500 h-3 rounded-full w-[85%] shadow-sm"></div>
+                        <div className="bg-yellow-500 h-3 rounded-full w-[30%] shadow-sm"></div>
                       </div>
-                      <div className="text-blue-500 text-sm mt-2 font-semibold">Advanced</div>
+                      <div className="text-yellow-500 text-sm mt-2 font-semibold">Started</div>
                     </div>
                     <div className={`${
                       isDarkMode ? "bg-black/40" : "bg-white/90 border border-gray-200"
@@ -522,15 +536,15 @@ export default function JobPrepHomepage() {
                       <div className={`font-bold mb-2 text-lg ${
                         isDarkMode ? "text-white" : "text-gray-800"
                       }`}>
-                        Algorithms
+                        Netflix System
                       </div>
                       <div className={`w-full ${
                         isDarkMode ? "bg-gray-700" : "bg-gray-200"
                       } rounded-full h-3`}>
-                        <div className="bg-red-500 h-3 rounded-full w-[45%] shadow-sm"></div>
+                        <div className="bg-gray-400 h-3 rounded-full w-[0%] shadow-sm"></div>
                       </div>
-                      <div className="text-red-500 text-sm mt-2 font-semibold">
-                        Needs Work
+                      <div className="text-gray-400 text-sm mt-2 font-semibold">
+                        Not Started
                       </div>
                     </div>
                   </div>
@@ -540,13 +554,12 @@ export default function JobPrepHomepage() {
                     <div className={`font-bold mb-3 text-lg ${
                       isDarkMode ? "text-white" : "text-gray-800"
                     }`}>
-                      Recommended Focus
+                      Next Recommended Project
                     </div>
                     <div className={`${
                       isDarkMode ? "text-purple-300" : "text-purple-700"
                     } font-medium`}>
-                      Complete &quot;Advanced Algorithms&quot; track to boost interview
-                      readiness by 23%
+                      Complete "Amazon E-commerce System Design" - Build scalable microservices architecture
                     </div>
                   </div>
                 </div>
@@ -568,16 +581,14 @@ export default function JobPrepHomepage() {
                       ? "from-blue-400 to-purple-400"
                       : "from-blue-600 via-indigo-600 to-purple-600"
                   } bg-clip-text text-transparent`}>
-                    Smart Learning
+                    Real Company
                   </span>{" "}
-                  Paths
+                  Projects
                 </h3>
                 <p className={`text-xl leading-relaxed font-medium ${
                   isDarkMode ? "text-gray-300" : "text-gray-700"
                 }`} style={{ lineHeight: '1.8' }}>
-                  Take our comprehensive skill assessment and get a personalized
-                  learning roadmap. Our AI identifies your strengths and
-                  weaknesses to create the most efficient study plan.
+                  Work on actual problem statements from leading tech companies. Solve real-world challenges used by Google, Microsoft, Meta, and other top organizations for their hiring process.
                 </p>
                 <div className="space-y-5">
                   <div className="flex items-center space-x-4">
@@ -585,7 +596,7 @@ export default function JobPrepHomepage() {
                     <span className={`text-lg font-medium ${
                       isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}>
-                      Adaptive difficulty based on performance
+                      Problems from FAANG companies
                     </span>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -593,7 +604,7 @@ export default function JobPrepHomepage() {
                     <span className={`text-lg font-medium ${
                       isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}>
-                      Track progress across 50+ skill areas
+                      Industry-level complexity projects
                     </span>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -601,109 +612,295 @@ export default function JobPrepHomepage() {
                     <span className={`text-lg font-medium ${
                       isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}>
-                      Get study recommendations daily
+                      100+ real problem statements
                     </span>
                   </div>
                 </div>
-                <button className={`group font-bold text-lg px-10 py-5 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 flex items-center space-x-3 shadow-xl ${
+                <button 
+                  onClick={() => router.push('/learn?page=RealCompanyProjects')}
+                  className={`group font-bold text-lg px-10 py-5 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 flex items-center space-x-3 shadow-xl ${
                   isDarkMode
                     ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 shadow-blue-500/25"
                     : "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 shadow-blue-500/25"
                 } focus:outline-none focus:ring-4 focus:ring-blue-500/20`}
-                aria-label="Take skills assessment">
-                  <span>Take Assessment</span>
+                aria-label="Start real company projects">
+                  <span>Start Projects</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </div>
 
-            {/* Feature 3: Community & Mentorship */}
+            {/* Feature 3: Competitions & Hackathons */}
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <div className="inline-flex items-center space-x-2 bg-green-500/20 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-green-300">
+                <div className={`inline-flex items-center space-x-2 backdrop-blur-sm rounded-full px-4 py-2 text-sm ${
+                  isDarkMode
+                    ? "bg-green-500/20 text-green-300"
+                    : "bg-green-100/80 text-green-700"
+                }`}>
                   <Users className="w-4 h-4" />
-                  <span>Community Driven</span>
+                  <span>Competitive Programming</span>
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-white">
-                  Learn from{" "}
-                  <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
-                    Industry Experts
+                <h3 className={`text-3xl md:text-4xl font-bold ${
+                  isDarkMode ? "text-white" : "text-gray-900"
+                }`}>
+                  Master{" "}
+                  <span className={`bg-gradient-to-r ${
+                    isDarkMode
+                      ? "from-green-400 to-blue-400"
+                      : "from-green-600 to-blue-600"
+                  } bg-clip-text text-transparent`}>
+                    Competitions
                   </span>
                 </h3>
-                <p className="text-lg text-gray-300 leading-relaxed">
-                  Connect with mentors from top companies, join study groups,
-                  and participate in mock interview sessions with peers. Build
-                  your network while you prepare.
+                <p className={`text-lg leading-relaxed ${
+                  isDarkMode ? "text-gray-300" : "text-gray-600"
+                }`}>
+                  Participate in coding competitions, hackathons, and programming challenges. Compete with peers globally and showcase your skills to potential employers.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 text-green-400" />
-                    <span className="text-gray-300">
-                      1-on-1 mentorship with FAANG engineers
+                    <span className={`${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    }`}>
+                      Weekly coding competitions
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 text-green-400" />
-                    <span className="text-gray-300">
-                      Weekly group study sessions
+                    <span className={`${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    }`}>
+                      Global hackathon participation
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 text-green-400" />
-                    <span className="text-gray-300">
-                      Peer-to-peer practice interviews
+                    <span className={`${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    }`}>
+                      Industry-sponsored challenges
                     </span>
                   </div>
                 </div>
-                <button className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-3 rounded-full hover:from-green-600 hover:to-blue-600 transition-all transform hover:scale-105 flex items-center space-x-2">
-                  <span>Join Community</span>
+                <button 
+                  onClick={() => router.push('/learn?page=CompetitionsHackathons')}
+                  className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-3 rounded-full hover:from-green-600 hover:to-blue-600 transition-all transform hover:scale-105 flex items-center space-x-2">
+                  <span>Join Competition</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
               <div className="relative">
-                <div className="bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
+                <div className={`${
+                  isDarkMode
+                    ? "bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
+                    : "bg-gradient-to-br from-green-50/80 to-blue-50/80 backdrop-blur-sm rounded-3xl p-8 border-2 border-green-200/50 shadow-2xl"
+                }`}>
                   <div className="space-y-4">
-                    <div className="flex items-center space-x-3 bg-black/40 rounded-xl p-4">
-                      <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-400 rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold text-sm">
-                          SM
-                        </span>
+                    <div className={`flex items-center space-x-3 ${
+                      isDarkMode ? "bg-black/40" : "bg-white/90 border border-gray-200"
+                    } rounded-xl p-4 shadow-lg`}>
+                      <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">🏆</span>
                       </div>
                       <div>
-                        <div className="text-white font-semibold">
-                          Sarah Martinez
+                        <div className={`font-semibold ${
+                          isDarkMode ? "text-white" : "text-gray-800"
+                        }`}>
+                          CodeChef Weekly Challenge
                         </div>
-                        <div className="text-gray-400 text-sm">
-                          Senior SWE @ Google
+                        <div className={`text-sm ${
+                          isDarkMode ? "text-gray-400" : "text-gray-600"
+                        }`}>
+                          Algorithm & Data Structures
                         </div>
                       </div>
-                      <div className="ml-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-                        Online
+                      <div className="ml-auto bg-green-500 text-white text-xs px-3 py-1 rounded-full">
+                        Live
                       </div>
                     </div>
-                    <div className="flex items-center space-x-3 bg-black/40 rounded-xl p-4">
-                      <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold text-sm">
-                          AK
-                        </span>
+                    <div className={`flex items-center space-x-3 ${
+                      isDarkMode ? "bg-black/40" : "bg-white/90 border border-gray-200"
+                    } rounded-xl p-4 shadow-lg`}>
+                      <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-400 rounded-xl flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">💻</span>
                       </div>
                       <div>
-                        <div className="text-white font-semibold">Alex Kim</div>
-                        <div className="text-gray-400 text-sm">PM @ Meta</div>
+                        <div className={`font-semibold ${
+                          isDarkMode ? "text-white" : "text-gray-800"
+                        }`}>Tech Hackathon 2025</div>
+                        <div className={`text-sm ${
+                          isDarkMode ? "text-gray-400" : "text-gray-600"
+                        }`}>AI & Machine Learning</div>
                       </div>
-                      <div className="ml-auto bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
-                        Mentoring
+                      <div className="ml-auto bg-orange-500 text-white text-xs px-3 py-1 rounded-full">
+                        48hrs
                       </div>
                     </div>
-                    <div className="bg-purple-500/20 rounded-xl p-4">
-                      <div className="text-white font-semibold mb-1">
-                        Upcoming Session
+                    <div className={`${
+                      isDarkMode ? "bg-purple-500/20" : "bg-purple-100"
+                    } rounded-xl p-4`}>
+                      <div className={`font-semibold mb-1 ${
+                        isDarkMode ? "text-white" : "text-gray-800"
+                      }`}>
+                        Leaderboard Position
                       </div>
-                      <div className="text-purple-300 text-sm">
-                        System Design Workshop - Tomorrow 2PM
+                      <div className={`text-sm ${
+                        isDarkMode ? "text-purple-300" : "text-purple-700"
+                      }`}>
+                        Rank #23 out of 2,847 participants
                       </div>
-                      <div className="text-gray-400 text-xs mt-1">
-                        12 participants joined
+                      <div className={`text-xs mt-1 ${
+                        isDarkMode ? "text-gray-400" : "text-gray-600"
+                      }`}>
+                        850 points earned this week
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 4: Aptitude Learning Platforms */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-6">
+                <div className={`inline-flex items-center space-x-2 backdrop-blur-sm rounded-full px-4 py-2 text-sm ${
+                  isDarkMode
+                    ? "bg-orange-500/20 text-orange-300"
+                    : "bg-orange-100/80 text-orange-700"
+                }`}>
+                  <Brain className="w-4 h-4" />
+                  <span>Aptitude Mastery</span>
+                </div>
+                <h3 className={`text-3xl md:text-4xl font-bold ${
+                  isDarkMode ? "text-white" : "text-gray-900"
+                }`}>
+                  Advanced{" "}
+                  <span className={`bg-gradient-to-r ${
+                    isDarkMode
+                      ? "from-orange-400 to-red-400"
+                      : "from-orange-600 to-red-600"
+                  } bg-clip-text text-transparent`}>
+                    Aptitude Training
+                  </span>
+                </h3>
+                <p className={`text-lg leading-relaxed ${
+                  isDarkMode ? "text-gray-300" : "text-gray-600"
+                }`}>
+                  Master quantitative aptitude, logical reasoning, and verbal ability with our adaptive learning platform. Prepare for placement tests, entrance exams, and competitive assessments.
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-green-400" />
+                    <span className={`${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    }`}>
+                      Quantitative & Logical Reasoning
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-green-400" />
+                    <span className={`${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    }`}>
+                      Verbal & Analytical Ability
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-green-400" />
+                    <span className={`${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    }`}>
+                      Adaptive difficulty algorithms
+                    </span>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => router.push('/learn?page=AptitudeLearningPlatforms')}
+                  className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105 flex items-center space-x-2">
+                  <span>Start Aptitude Test</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="relative">
+                <div className={`${
+                  isDarkMode
+                    ? "bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
+                    : "bg-gradient-to-br from-orange-50/80 to-red-50/80 backdrop-blur-sm rounded-3xl p-8 border-2 border-orange-200/50 shadow-2xl"
+                }`}>
+                  <div className="space-y-4">
+                    <div className={`${
+                      isDarkMode ? "bg-black/40" : "bg-white/90 border border-gray-200"
+                    } rounded-xl p-4 shadow-lg`}>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={`font-semibold ${
+                          isDarkMode ? "text-white" : "text-gray-800"
+                        }`}>
+                          Quantitative Aptitude
+                        </div>
+                        <div className={`text-sm ${
+                          isDarkMode ? "text-orange-300" : "text-orange-600"
+                        }`}>
+                          Level: Advanced
+                        </div>
+                      </div>
+                      <div className={`w-full ${
+                        isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                      } rounded-full h-2 mb-2`}>
+                        <div className="bg-gradient-to-r from-orange-400 to-red-400 h-2 rounded-full w-[85%]"></div>
+                      </div>
+                      <div className={`text-xs ${
+                        isDarkMode ? "text-gray-400" : "text-gray-600"
+                      }`}>
+                        850/1000 questions completed
+                      </div>
+                    </div>
+                    
+                    <div className={`${
+                      isDarkMode ? "bg-black/40" : "bg-white/90 border border-gray-200"
+                    } rounded-xl p-4 shadow-lg`}>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={`font-semibold ${
+                          isDarkMode ? "text-white" : "text-gray-800"
+                        }`}>
+                          Logical Reasoning
+                        </div>
+                        <div className={`text-sm ${
+                          isDarkMode ? "text-blue-300" : "text-blue-600"
+                        }`}>
+                          Level: Intermediate
+                        </div>
+                      </div>
+                      <div className={`w-full ${
+                        isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                      } rounded-full h-2 mb-2`}>
+                        <div className="bg-gradient-to-r from-blue-400 to-purple-400 h-2 rounded-full w-[72%]"></div>
+                      </div>
+                      <div className={`text-xs ${
+                        isDarkMode ? "text-gray-400" : "text-gray-600"
+                      }`}>
+                        720/1000 questions completed
+                      </div>
+                    </div>
+
+                    <div className={`${
+                      isDarkMode ? "bg-green-500/20" : "bg-green-100"
+                    } rounded-xl p-4`}>
+                      <div className={`font-semibold mb-2 ${
+                        isDarkMode ? "text-white" : "text-gray-800"
+                      }`}>
+                        Today's Challenge
+                      </div>
+                      <div className={`text-sm ${
+                        isDarkMode ? "text-green-300" : "text-green-700"
+                      }`}>
+                        Solve 10 probability problems
+                      </div>
+                      <div className={`text-xs mt-1 ${
+                        isDarkMode ? "text-gray-400" : "text-gray-600"
+                      }`}>
+                        7/10 completed • 15 min remaining
                       </div>
                     </div>
                   </div>
@@ -714,6 +911,9 @@ export default function JobPrepHomepage() {
         </div>
       </section>
 
+      {/* New Feature Modules Section */}
+      <NewFeatureModules />
+
       {/* Testimonials Section */}
       <section className={`py-24 px-4 sm:px-6 lg:px-8 ${
         isDarkMode ? "bg-black/20" : "bg-gradient-to-b from-slate-50 to-blue-50"
@@ -722,19 +922,19 @@ export default function JobPrepHomepage() {
           <h2 className={`text-5xl md:text-6xl font-black mb-6 tracking-tight ${
             isDarkMode ? "text-white" : "text-gray-900"
           }`} style={{ lineHeight: '1.1' }}>
-            Success{" "}
+            Meet Our{" "}
             <span className={`bg-gradient-to-r ${
               isDarkMode
                 ? "from-purple-400 to-pink-400"
                 : "from-purple-600 via-pink-600 to-red-500"
             } bg-clip-text text-transparent`}>
-              Stories
+              Team
             </span>
           </h2>
           <p className={`text-xl mb-20 font-medium max-w-3xl mx-auto ${
             isDarkMode ? "text-gray-300" : "text-gray-700"
           }`} style={{ lineHeight: '1.7' }}>
-            Hear from professionals who transformed their careers with CareerPilot AI and achieved their dream jobs
+            Meet the innovative minds behind CareerPilot AI - experienced professionals and educators dedicated to transforming career preparation through technology.
           </p>
 
           <div className="relative">
@@ -744,40 +944,37 @@ export default function JobPrepHomepage() {
                 : "bg-white/95 backdrop-blur-sm border-2 border-gray-200/50 shadow-2xl shadow-blue-500/10"
             } rounded-3xl p-10 md:p-16`}>
               <div className="flex justify-center mb-8">
-                {[...Array(testimonials[currentTestimonial].rating)].map(
-                  (_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-8 h-8 ${
-                        isDarkMode ? "text-yellow-400" : "text-yellow-500"
-                      } fill-current`}
-                    />
-                  )
-                )}
+                <div className={`w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold ${
+                  isDarkMode
+                    ? "bg-gradient-to-r from-purple-500 to-pink-500"
+                    : "bg-gradient-to-r from-blue-500 to-purple-500"
+                } text-white`}>
+                  {teamMembers[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
+                </div>
               </div>
 
               <blockquote className={`text-2xl md:text-3xl mb-10 leading-relaxed font-semibold ${
                 isDarkMode ? "text-white" : "text-gray-800"
               }`} style={{ lineHeight: '1.6' }}>
-                &quot;{testimonials[currentTestimonial].content}&quot;
+                &quot;{teamMembers[currentTestimonial].content}&quot;
               </blockquote>
 
               <div>
                 <div className={`text-xl font-bold ${
                   isDarkMode ? "text-white" : "text-gray-900"
                 }`}>
-                  {testimonials[currentTestimonial].name}
+                  {teamMembers[currentTestimonial].name}
                 </div>
                 <div className={`text-lg font-medium ${
                   isDarkMode ? "text-purple-400" : "text-purple-600"
                 }`}>
-                  {testimonials[currentTestimonial].role}
+                  {teamMembers[currentTestimonial].role}
                 </div>
               </div>
             </div>
 
             <div className="flex justify-center space-x-3 mt-10">
-              {testimonials.map((_, index) => (
+              {teamMembers.map((_, index) => (
                 <button
                   key={index}
                   className={`h-4 rounded-full transition-all duration-300 ${
@@ -786,7 +983,7 @@ export default function JobPrepHomepage() {
                       : `w-4 ${isDarkMode ? "bg-gray-600" : "bg-gray-300"} hover:${isDarkMode ? "bg-gray-500" : "bg-gray-400"}`
                   }`}
                   onClick={() => setCurrentTestimonial(index)}
-                  aria-label={`View testimonial ${index + 1}`}
+                  aria-label={`View team member ${index + 1}`}
                 />
               ))}
             </div>

@@ -64,19 +64,29 @@ export default function Home() {
           text: "Courses",
         },
         {
-          href: "/learn?page=CreateCourse",
-          icon: FolderGit2,
-          text: "Created Courses",
+          href: "/learn?page=IndustryCertifications",
+          icon: BookmarkCheck,
+          text: "Industry Certifications",
         },
         {
-          href: " /learn?page=Projects",
+          href: " /learn?page=RealCompanyProjects",
           icon: FolderGit2,
-          text: "Projects",
+          text: "Real Company Projects",
+        },
+        {
+          href: "/learn?page=CompetitionsHackathons",
+          icon: Code,
+          text: "Competitions & Hackathons",
+        },
+        {
+          href: "/learn?page=AptitudeLearningPlatforms",
+          icon: Brain,
+          text: "Aptitude Learning Platforms",
         },
         {
           href: "/learn/recall",
           icon: BookOpen,
-          text: "Recall",
+          text: "Recall Learning",
         },
         {
           href: " /learn?page=DayRemains",
@@ -86,12 +96,17 @@ export default function Home() {
         {
           href: " /learn?page=ToolsCompanyUse",
           icon: BookOpenCheck,
-          text: "Tool company use",
+          text: "Tools Companies Use",
         },
         {
           href: "/learn?page=ResumeExtractor",
-          icon: BookOpenCheck,
-          text: "Check my Resume",
+          icon: FileCheck,
+          text: "Resume Analysis",
+        },
+        {
+          href: "/learn?page=CreateCourse",
+          icon: FolderGit2,
+          text: "Created Courses",
         },
       ],
     },

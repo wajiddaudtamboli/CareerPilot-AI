@@ -205,9 +205,115 @@ npm run dev
 | ----------------------- | ------------------------------------- | -------- |
 | `GOOGLE_GEMINI_API_KEY` | Google Gemini API key for AI features | Yes      |
 
-## Deployment
+## 🚀 Deployment
 
-This project is optimized for deployment on Vercel. See the deployment guide below.
+CareerPilot-AI supports multiple deployment options:
+
+### Vercel (Recommended - Fastest)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wajiddaudtamboli/CareerPilot-AI)
+
+**One-Click Deploy:**
+1. Click the "Deploy with Vercel" button above
+2. Connect your GitHub account
+3. Add environment variables in Vercel dashboard:
+   - `GOOGLE_GEMINI_API_KEY`
+   - `NEXT_PUBLIC_GEMINI_API_KEY` (same as above)
+   - `CLERK_SECRET_KEY` (optional)
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` (optional)
+4. Click "Deploy"
+5. Your app will be live in ~2 minutes!
+
+**Manual Deploy:**
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Login to Vercel
+vercel login
+
+# Deploy
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) for detailed instructions.
+
+### Hostinger / VPS Deployment
+
+**Perfect for custom domains and full control:**
+
+```bash
+# Build the project
+npm install
+npm run build
+
+# Start production server
+npm start
+# OR with PM2 for process management
+pm2 start npm --name "careerpilot" -- start
+```
+
+**Quick Setup:**
+1. SSH into your Hostinger server
+2. Install Node.js 22.x: `curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt-get install -y nodejs`
+3. Clone repository: `git clone https://github.com/wajiddaudtamboli/CareerPilot-AI.git`
+4. Install dependencies: `cd CareerPilot-AI && npm install`
+5. Create `.env.local` with your API keys
+6. Build: `npm run build`
+7. Start: `pm2 start npm --name careerpilot -- start`
+
+See [DEPLOYMENT_GUIDE_HOSTINGER.md](./DEPLOYMENT_GUIDE_HOSTINGER.md) for comprehensive guide including:
+- Nginx configuration
+- SSL certificate setup
+- PM2 process management
+- Monitoring and backups
+- Security hardening
+
+### Docker Deployment
+
+```bash
+# Build Docker image
+docker build -t careerpilot-ai .
+
+# Run container
+docker run -p 3000:3000 \
+  -e GOOGLE_GEMINI_API_KEY=your_key \
+  -e NEXT_PUBLIC_GEMINI_API_KEY=your_key \
+  careerpilot-ai
+```
+
+### Environment Variables for Production
+
+**Required:**
+- `GOOGLE_GEMINI_API_KEY` - Get from [Google AI Studio](https://aistudio.google.com/app/apikey)
+- `NEXT_PUBLIC_GEMINI_API_KEY` - Same value as above
+
+**Optional:**
+- `NEXT_PUBLIC_YOUTUBE_API_KEY` - For video content
+- `CLERK_SECRET_KEY` - For authentication
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` - For authentication
+- `DATABASE_URL` - For data persistence
+
+### Production Checklist
+
+Before deploying to production:
+
+- [x] Build completes without errors: `npm run build`
+- [x] All environment variables set correctly
+- [x] API keys are valid and not hardcoded
+- [x] Error handling implemented in all API routes
+- [x] Fallback systems in place for missing API keys
+- [x] Security headers configured
+- [x] CORS properly configured
+- [ ] SSL certificate installed (for custom domains)
+- [ ] Domain DNS properly configured
+- [ ] Monitoring and error tracking setup (optional: Sentry)
+- [ ] Backups configured (for VPS deployments)
+
+**See [PRODUCTION_READY.md](./PRODUCTION_READY.md) for complete production readiness audit.**
 
 <pre>
 

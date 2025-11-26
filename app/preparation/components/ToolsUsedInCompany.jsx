@@ -1,184 +1,148 @@
 "use client";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext } from "react";
 import { ThemeContext } from "../../components/ThemeContext";
-import QuestionLoader from "../../components/Loader";
-import { Code, GitBranch, Github, Boxes, Hammer, Wrench, Server, Terminal, Cpu, Database, Globe, Cloud, Figma, Chrome } from "lucide-react";
+import { ExternalLink, Users, MessageSquare, GitBranch, Paintbrush, Terminal, Cloud, UserCheck } from "lucide-react";
+import {
+  SiJira,
+  SiConfluence,
+  SiTrello,
+  SiAsana,
+  SiSlack,
+  SiMicrosoftteams,
+  SiDiscord,
+  SiZoom,
+  SiGithub,
+  SiGitlab,
+  SiBitbucket,
+  SiFigma,
+  SiAdobexd,
+  SiCanva,
+  SiPostman,
+  SiSwagger,
+  SiSelenium,
+  SiAmazonaws,
+  SiGooglecloud,
+  SiMicrosoftazure,
+  SiJenkins,
+  SiDocker,
+  SiKubernetes,
+  SiTerraform,
+  SiWorkday,
+  SiZoho,
+} from "react-icons/si";
 
-const iconForTool = (name = "") => {
-  const n = name.toLowerCase();
-  if (n.includes("github")) return Github;
-  if (n.includes("git")) return GitBranch;
-  if (n.includes("vscode") || n.includes("visual studio")) return Code;
-  if (n.includes("jira")) return Boxes;
-  if (n.includes("slack")) return Boxes;
-  if (n.includes("docker")) return Server;
-  if (n.includes("kubernetes") || n.includes("k8")) return Server;
-  if (n.includes("postman")) return Terminal;
-  if (n.includes("figma")) return Figma;
-  if (n.includes("chrome") || n.includes("browser")) return Chrome;
-  if (n.includes("aws") || n.includes("azure") || n.includes("gcp") || n.includes("cloud")) return Cloud;
-  if (n.includes("jira") || n.includes("trello") || n.includes("notion")) return Boxes;
-  if (n.includes("mysql") || n.includes("postgres") || n.includes("mongodb") || n.includes("db")) return Database;
-  if (n.includes("ci") || n.includes("cd") || n.includes("pipeline")) return Hammer;
-  if (n.includes("build") || n.includes("compile")) return Cpu;
-  return Wrench;
+const companyToolsData = {
+  "Project Management & Collaboration": [
+    { name: "Jira", icon: SiJira, url: "https://www.atlassian.com/software/jira", color: "#0052CC" },
+    { name: "Confluence", icon: SiConfluence, url: "https://www.atlassian.com/software/confluence", color: "#172B4D" },
+    { name: "Trello", icon: SiTrello, url: "https://trello.com/", color: "#0079BF" },
+    { name: "Asana", icon: SiAsana, url: "https://asana.com/", color: "#F06A6A" },
+    { name: "Monday.com", icon: Users, url: "https://monday.com/", color: "#FF3D57" },
+    { name: "ClickUp", icon: Users, url: "https://clickup.com/", color: "#7B68EE" }
+  ],
+  "Communication Tools": [
+    { name: "Slack", icon: SiSlack, url: "https://slack.com/", color: "#4A154B" },
+    { name: "Microsoft Teams", icon: SiMicrosoftteams, url: "https://www.microsoft.com/en-in/microsoft-teams/", color: "#6264A7" },
+    { name: "Discord", icon: SiDiscord, url: "https://discord.com/", color: "#5865F2" },
+    { name: "Zoom", icon: SiZoom, url: "https://zoom.us/", color: "#2D8CFF" }
+  ],
+  "Development & Version Control": [
+    { name: "GitHub", icon: SiGithub, url: "https://github.com/", color: "#181717" },
+    { name: "GitLab", icon: SiGitlab, url: "https://gitlab.com/", color: "#FC6D26" },
+    { name: "Bitbucket", icon: SiBitbucket, url: "https://bitbucket.org/", color: "#0052CC" },
+    { name: "Azure Repos", icon: SiMicrosoftazure, url: "https://azure.microsoft.com/services/devops/repos/", color: "#0078D4" }
+  ],
+  "Design & Prototyping": [
+    { name: "Figma", icon: SiFigma, url: "https://www.figma.com/", color: "#F24E1E" },
+    { name: "Adobe XD", icon: SiAdobexd, url: "https://www.adobe.com/products/xd.html/", color: "#FF61F6" },
+    { name: "Canva", icon: SiCanva, url: "https://www.canva.com/", color: "#00C4CC" }
+  ],
+  "API & Testing Tools": [
+    { name: "Postman", icon: SiPostman, url: "https://www.postman.com/", color: "#FF6C37" },
+    { name: "Swagger", icon: SiSwagger, url: "https://swagger.io/", color: "#85EA2D" },
+    { name: "JMeter", icon: Terminal, url: "https://jmeter.apache.org/", color: "#D22128" },
+    { name: "Selenium", icon: SiSelenium, url: "https://www.selenium.dev/", color: "#43B02A" }
+  ],
+  "DevOps, Cloud & Automation": [
+    { name: "AWS Console", icon: SiAmazonaws, url: "https://aws.amazon.com/", color: "#FF9900" },
+    { name: "Google Cloud", icon: SiGooglecloud, url: "https://cloud.google.com/", color: "#4285F4" },
+    { name: "Azure DevOps", icon: SiMicrosoftazure, url: "https://azure.microsoft.com/", color: "#0078D4" },
+    { name: "Jenkins", icon: SiJenkins, url: "https://www.jenkins.io/", color: "#D24939" },
+    { name: "Docker", icon: SiDocker, url: "https://www.docker.com/", color: "#2496ED" },
+    { name: "Kubernetes", icon: SiKubernetes, url: "https://kubernetes.io/", color: "#326CE5" },
+    { name: "Terraform", icon: SiTerraform, url: "https://www.terraform.io/", color: "#7B42BC" }
+  ],
+  "HR, Hiring & Workflow Systems": [
+    { name: "Workday", icon: SiWorkday, url: "https://www.workday.com/", color: "#F26B38" },
+    { name: "BambooHR", icon: UserCheck, url: "https://www.bamboohr.com/", color: "#61BC47" },
+    { name: "Zoho People", icon: SiZoho, url: "https://www.zoho.com/people/", color: "#C83E2A" },
+    { name: "Greenhouse", icon: UserCheck, url: "https://www.greenhouse.io/", color: "#4CAF50" }
+  ]
 };
-
-const storageKey = (profession) => `tools-cache:v1:${(profession||'').trim().toLowerCase()}`;
 
 export default function ToolsUsedInCompany() {
   const { isDarkMode } = useContext(ThemeContext);
-  const [profession, setProfession] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
-  const inMemory = useRef(new Map());
-
-  // Load from cache on mount if query param exists (optional)
-  useEffect(() => {
-    // no-op for now
-  }, []);
-
-  const fetchTools = async (q) => {
-    const key = storageKey(q);
-    setError(null);
-
-    // In-memory cache
-    if (inMemory.current.has(key)) {
-      setData(inMemory.current.get(key));
-      return;
-    }
-
-    // localStorage cache
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem(key);
-      if (cached) {
-        try {
-          const parsed = JSON.parse(cached);
-          setData(parsed);
-          inMemory.current.set(key, parsed);
-          return;
-        } catch {}
-      }
-    }
-
-    setLoading(true);
-    try {
-      const prompt = `Return ONLY strict JSON with this schema (no markdown, no extra text): {\n  \"profession\": string,\n  \"tools\": Array<{ \"name\": string, \"category\": string }>\n}\nProfession: ${q}.\nList practical, commonly used tools for this role (5-12 items).`;
-
-      const res = await fetch('/api/gemini', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
-      });
-      const json = await res.json();
-      const text = json?.response || '';
-
-      // Extract JSON from plain text or fenced code
-      const extracted = extractJson(text);
-      const parsed = JSON.parse(extracted);
-
-      // Normalize
-      const normalized = {
-        profession: parsed.profession || q,
-        tools: Array.isArray(parsed.tools) ? parsed.tools.map(t => ({
-          name: String(t.name || '').trim(),
-          category: t.category ? String(t.category).trim() : 'General'
-        })) : []
-      };
-
-      setData(normalized);
-      inMemory.current.set(key, normalized);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem(key, JSON.stringify(normalized));
-      }
-    } catch (e) {
-      console.error('Tools fetch error', e);
-      setError('Unable to fetch tools. Please try again.');
-      setData(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const onSearch = (e) => {
-    e?.preventDefault();
-    const q = profession.trim();
-    if (!q) {
-      setError('Please enter a profession to search');
-      return;
-    }
-    fetchTools(q);
-  };
 
   return (
-    <div className={`${isDarkMode ? 'bg-black text-gray-100' : 'bg-white text-gray-800'} min-h-screen`}> 
-      <div className="max-w-5xl mx-auto px-4 py-10">
-        <h1 className="text-3xl font-bold mb-2">Tools Used in Company</h1>
-        <p className="mb-6 text-sm opacity-80">Search by profession (e.g., Frontend Developer, Data Analyst) to see commonly used tools.</p>
+    <div className={`${isDarkMode ? 'bg-black text-gray-100' : 'bg-white text-gray-800'} min-h-screen`}>
+      <div className="max-w-7xl mx-auto px-4 py-10">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold mb-4">Company Tools A-to-Z</h1>
+          <p className="text-lg opacity-80">Essential tools used across Tech, HR, Product, Design, QA, Support & DevOps</p>
+        </div>
 
-        <form onSubmit={onSearch} className="flex gap-2 mb-6">
-          <input
-            type="text"
-            className={`flex-1 px-4 py-3 rounded-md border ${isDarkMode ? 'bg-gray-900 border-gray-700 placeholder-gray-500' : 'bg-white border-gray-300 placeholder-gray-400'}`}
-            placeholder="e.g., Frontend Developer"
-            value={profession}
-            onChange={(e) => setProfession(e.target.value)}
-          />
-          <button type="submit" className="px-5 py-3 rounded-md bg-blue-600 text-white hover:bg-blue-700">Search</button>
-        </form>
-
-        {loading && (
-          <div className="py-10 flex justify-center"><QuestionLoader /></div>
-        )}
-
-        {error && (
-          <div className={`mb-4 p-3 rounded-md ${isDarkMode ? 'bg-red-900/30 text-red-300 border border-red-800' : 'bg-red-50 text-red-700 border border-red-200'}`}>{error}</div>
-        )}
-
-        {data && Array.isArray(data.tools) && data.tools.length === 0 && (
-          <div className={`mb-4 p-3 rounded-md ${isDarkMode ? 'bg-yellow-900/30 text-yellow-300 border border-yellow-800' : 'bg-yellow-50 text-yellow-800 border border-yellow-200'}`}>
-            No tools found for this profession.
-          </div>
-        )}
-
-        {data && Array.isArray(data.tools) && data.tools.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">{data.profession}</h2>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {data.tools.map((t, idx) => {
-                const Icon = iconForTool(t.name);
+        {Object.entries(companyToolsData).map(([category, tools], categoryIndex) => (
+          <div key={categoryIndex} className="mb-12">
+            <h2 className={`text-2xl font-bold mb-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+              {category}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {tools.map((tool, index) => {
+                const Icon = tool.icon;
                 return (
-                  <li key={`${t.name}-${idx}`} className={`flex items-center gap-3 p-4 rounded-lg border ${isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} shadow-sm`}>
-                    <span className={`inline-flex items-center justify-center w-10 h-10 rounded-md ${isDarkMode ? 'bg-gray-800' : 'bg-blue-50'}`}>
-                      <Icon className={`${isDarkMode ? 'text-gray-200' : 'text-blue-600'}`} size={20} />
-                    </span>
-                    <div className="flex-1">
-                      <p className="font-medium">{t.name}</p>
-                      <p className="text-sm opacity-70">{t.category || 'General'}</p>
+                  <a
+                    key={index}
+                    href={tool.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block group"
+                  >
+                    <div className={`p-6 rounded-xl border transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+                      isDarkMode
+                        ? 'bg-gray-900 border-gray-800 hover:border-blue-500'
+                        : 'bg-white border-gray-200 hover:border-blue-400 shadow-sm'
+                    }`}>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className={`p-3 rounded-lg ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}
+                             style={{ color: tool.color }}>
+                          <Icon className="w-8 h-8" />
+                        </div>
+                        <ExternalLink className={`w-4 h-4 ${isDarkMode ? 'text-gray-600' : 'text-gray-400'} group-hover:text-blue-500`} />
+                      </div>
+                      <h3 className="font-semibold text-lg mb-2">{tool.name}</h3>
+                      <p className={`text-sm ${isDarkMode ? 'text-gray-500' : 'text-gray-600'} truncate`}>
+                        {tool.url.replace('https://', '')}
+                      </p>
                     </div>
-                  </li>
-                )
+                  </a>
+                );
               })}
-            </ul>
+            </div>
           </div>
-        )}
+        ))}
+
+        <div className={`mt-16 p-8 rounded-2xl text-center ${
+          isDarkMode
+            ? 'bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-gray-800'
+            : 'bg-gradient-to-r from-blue-50 to-purple-50 border border-gray-200'
+        }`}>
+          <Terminal className={`w-12 h-12 mx-auto mb-4 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
+          <h3 className="text-xl font-bold mb-2">Ready to Use These Tools?</h3>
+          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            Most companies provide training and access to these tools. Focus on learning the fundamentals!
+          </p>
+        </div>
       </div>
     </div>
   );
-}
-
-function extractJson(text) {
-  if (!text) return '{}';
-  // If it already looks like JSON
-  const trimmed = text.trim();
-  if (trimmed.startsWith('{') && trimmed.endsWith('}')) return trimmed;
-  // Remove code fences
-  const fenceMatch = trimmed.match(/```(?:json)?\n([\s\S]*?)```/i);
-  if (fenceMatch) return fenceMatch[1];
-  // Fallback: find first { ... } block
-  const start = trimmed.indexOf('{');
-  const end = trimmed.lastIndexOf('}');
-  if (start !== -1 && end !== -1 && end > start) return trimmed.slice(start, end + 1);
-  return '{}';
 }

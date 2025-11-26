@@ -7,11 +7,32 @@ import {
     MessageSquare,
     Mic,
     Video,
+    ExternalLink,
+    Globe,
 } from "lucide-react";
+import {
+    SiZoom,
+    SiGoogle,
+} from "react-icons/si";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../../../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import DetailForm from "./components/DetailForm";
+
+const mockInterviewPlatforms = [
+  { name: "Zoom", icon: SiZoom, url: "https://zoom.us/", color: "#2D8CFF" },
+  { name: "Google Meet", icon: SiGoogle, url: "https://meet.google.com/", color: "#4285F4" },
+  { name: "InterviewBit", icon: Globe, url: "https://www.interviewbit.com/", color: "#FF6B35" },
+  { name: "Pramp", icon: Globe, url: "https://www.pramp.com/", color: "#4CAF50" },
+  { name: "Gainlo", icon: Globe, url: "http://www.gainlo.co/", color: "#2196F3" },
+  { name: "InterviewBuddy", icon: Globe, url: "https://interviewbuddy.in/", color: "#FF9800" },
+  { name: "MeetLeet", icon: Globe, url: "https://meetleet.com/", color: "#9C27B0" },
+  { name: "HireVue", icon: Globe, url: "https://www.hirevue.com/", color: "#E91E63" },
+  { name: "HackerEarth Interviews", icon: Globe, url: "https://www.hackerearth.com/", color: "#2C3454" },
+  { name: "iMocha", icon: Globe, url: "https://www.imocha.io/", color: "#607D8B" },
+  { name: "Workday Interview", icon: Globe, url: "https://www.workday.com/", color: "#F44336" },
+  { name: "Superset Interview", icon: Globe, url: "https://joinsuperset.com/", color: "#673AB7" }
+];
 
 const PreMockInterview = () => {
   const [selectedTab, setSelectedTab] = useState("prepare");
@@ -344,6 +365,45 @@ const PreMockInterview = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+
+        {/* A-to-Z Mock Interview Platforms */}
+        <div className="mt-16">
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle className="text-blue-900 text-2xl">Mock Interview Platforms</CardTitle>
+              <p className="text-blue-700">Practice with these platforms used by real recruiters</p>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {mockInterviewPlatforms.map((platform, index) => {
+                  const Icon = platform.icon;
+                  return (
+                    <a
+                      key={index}
+                      href={platform.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group"
+                    >
+                      <Card className="h-full transition-all duration-300 hover:scale-105 hover:shadow-xl border-gray-200 hover:border-blue-400">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="p-2 rounded-lg bg-gray-100" style={{ color: platform.color }}>
+                              <Icon className="w-6 h-6" />
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+                          </div>
+                          <h3 className="font-semibold text-gray-900 text-sm">{platform.name}</h3>
+                          <p className="text-xs text-gray-600 truncate">{platform.url}</p>
+                        </CardContent>
+                      </Card>
+                    </a>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </>

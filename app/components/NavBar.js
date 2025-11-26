@@ -28,10 +28,10 @@ function NavBar() {
       name: "Learn",
       submenu: [
         { name: "Courses", href: "/learn?page=CoursesExplore" },
-        { name: "Roadmaps", href: "/learn?page=Roadmaps" },
-        { name: "Recall", href: "/learn/recall" },
-        { name: "Test Ability", href: "/learn?page=TestAbility" },
-        { name: "Course Details", href: "/learn/course" },
+        { name: "Industry-Based Certifications", href: "/learn?page=IndustryCertifications" },
+        { name: "Projects – Real-World Problems", href: "/learn?page=ProjectsPlatforms" },
+        { name: "Competitions & Hackathons", href: "/learn?page=CompetitionsHackathons" },
+        { name: "Aptitude Learning Platforms", href: "/learn?page=AptitudeLearningPlatforms" },
       ],
     },
     {
@@ -40,15 +40,18 @@ function NavBar() {
         { name: "Mock Interview", href: "/preparation/mockinterview" },
         { name: "Soft Skills", href: "/preparation/softskill" },
         { name: "Coding Round", href: "/preparation/codinground" },
-        { name: "Tools Used in Company", href: "/preparation?page=ToolsUsedInCompany" },
       ],
     },
     {
       name: "Company",
       submenu: [
-        { name: "Home", href: "/company/home" },
-        { name: "Profile", href: "/company/profile" },
-        { name: "Talent Search", href: "/company/talentsearch" },
+        { name: "Hiring Platforms", href: "/company/hiring-platforms" },
+        { name: "Superset Drives", href: "https://joinsuperset.com", external: true },
+        { name: "Internship Platforms", href: "/company/internship-platforms" },
+        { name: "Hiring Challenges", href: "/company/hiring-challenges" },
+        { name: "MNC Career Portals", href: "/company/mnc-careers" },
+        { name: "Startup Database", href: "https://drive.google.com/drive/folders/1kpMh9S6pEgfMMD2UOSeAmgx9Y-0HYFoj", external: true },
+        { name: "Remote Hiring", href: "https://docs.google.com/spreadsheets/d/1m8zZ3Rz2LMwe707XfN9SkDG89AP5W1QE/edit?usp=drivesdk", external: true },
       ],
     },
   ];
@@ -178,18 +181,35 @@ function NavBar() {
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
                     {item.submenu.map((subItem) => (
-                      <a
-                        key={subItem.name}
-                        href={subItem.href}
-                        className={`block px-4 py-2 transition-colors duration-200 ${
-                          isDarkMode
-                            ? "text-white hover:bg-gray-900 hover:text-gray-300"
-                            : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                        }`}
-                        onClick={handleLinkClick}
-                      >
-                        {subItem.name}
-                      </a>
+                      subItem.external ? (
+                        <a
+                          key={subItem.name}
+                          href={subItem.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`block px-4 py-2 transition-colors duration-200 ${
+                            isDarkMode
+                              ? "text-white hover:bg-gray-900 hover:text-gray-300"
+                              : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                          }`}
+                          onClick={handleLinkClick}
+                        >
+                          {subItem.name}
+                        </a>
+                      ) : (
+                        <a
+                          key={subItem.name}
+                          href={subItem.href}
+                          className={`block px-4 py-2 transition-colors duration-200 ${
+                            isDarkMode
+                              ? "text-white hover:bg-gray-900 hover:text-gray-300"
+                              : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                          }`}
+                          onClick={handleLinkClick}
+                        >
+                          {subItem.name}
+                        </a>
+                      )
                     ))}
                   </div>
                 )}
@@ -304,18 +324,35 @@ function NavBar() {
                 {activeDropdown === index && (
                   <div className="mt-2 space-y-1 pl-4">
                     {item.submenu.map((subItem) => (
-                      <a
-                        key={subItem.name}
-                        href={subItem.href}
-                        className={`block py-2 ${
-                          isDarkMode
-                            ? "text-white hover:text-gray-300"
-                            : "text-gray-600 hover:text-blue-600"
-                        }`}
-                        onClick={handleLinkClick}
-                      >
-                        {subItem.name}
-                      </a>
+                      subItem.external ? (
+                        <a
+                          key={subItem.name}
+                          href={subItem.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`block py-2 ${
+                            isDarkMode
+                              ? "text-white hover:text-gray-300"
+                              : "text-gray-600 hover:text-blue-600"
+                          }`}
+                          onClick={handleLinkClick}
+                        >
+                          {subItem.name}
+                        </a>
+                      ) : (
+                        <a
+                          key={subItem.name}
+                          href={subItem.href}
+                          className={`block py-2 ${
+                            isDarkMode
+                              ? "text-white hover:text-gray-300"
+                              : "text-gray-600 hover:text-blue-600"
+                          }`}
+                          onClick={handleLinkClick}
+                        >
+                          {subItem.name}
+                        </a>
+                      )
                     ))}
                   </div>
                 )}
