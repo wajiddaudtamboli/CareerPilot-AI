@@ -1,6 +1,6 @@
 "use client";
 
-import { Brain, Lightbulb, Play, ShieldCheck, Users, ExternalLink, Globe } from "lucide-react";
+import { ExternalLink, Globe } from "lucide-react";
 import {
   SiLinkedin,
   SiCoursera,
@@ -8,12 +8,9 @@ import {
   SiSkillshare,
   SiEdx,
 } from "react-icons/si";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Alert, AlertDescription } from "../../../components/ui/alert";
-import { Button } from "../../../components/ui/button";
-import { Card, CardContent, CardFooter } from "../../../components/ui/card";
-import { AiSoftSkillQuestion } from '../../../config/AiModels';
+import { Card } from "../../../components/ui/card";
+import { useContext } from "react";
+import { ThemeContext } from "../../components/ThemeContext";
 
 const softSkillsPlatforms = [
   { name: "LinkedIn Learning", icon: SiLinkedin, url: "https://www.linkedin.com/learning/", color: "#0A66C2" },
@@ -28,124 +25,33 @@ const softSkillsPlatforms = [
   { name: "Communication Coach AI", icon: Globe, url: "https://www.yoodli.ai/", color: "#6366F1" }
 ];
 
-const SoftSkillFeature = ({ icon: Icon, title, description }) => (
-  <div className="flex items-center space-x-4 p-3 bg-blue-50 rounded-lg mb-3">
-    <Icon className="h-8 w-8 text-blue-600" />
-    <div>
-      <h3 className="font-semibold text-blue-900">{title}</h3>
-      <p className="text-sm text-blue-700">{description}</p>
-    </div>
-  </div>
-);
+// Removed features and assessment actions
 
 const SoftSkillAssessmentPage = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const router = useRouter();
-
-  const startAssessment = async () => {
-    setLoading(true);
-    setError(null);
-    const prompt = `generate a list of open-ended questions that will assess the student's soft skills through the response given. Use scenarios or examples relevant to the following branch: Computer Science. It could target each soft skill such as communication, teamwork, problem-solving, adaptability, leadership, or conflict resolution. Ensure that questions are designed to elicit detailed reflection from the student and can be used in professional or an academic environment. Provide 1-2 questions per skill and label which soft skill each question addresses.in json formate.`;
-
-    try {
-      const results = await AiSoftSkillQuestion.sendMessage(prompt);
-      const responseText = await results.response.text();
-      const parsedQuestions = JSON.parse(responseText);
-      localStorage.setItem(
-        "softSkillQuestions",
-        JSON.stringify(parsedQuestions)
-      );
-      router.push("/preparation/softskill/assessment");
-    } catch (error) {
-      console.error("Error generating questions:", error);
-      setError("Failed to generate questions. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const softSkillFeatures = [
-    {
-      icon: Lightbulb,
-      title: "Personalized Insights",
-      description: "Tailored assessment to reveal your unique strengths",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Comprehensive Evaluation",
-      description: "Deep dive into critical professional skills",
-    },
-    {
-      icon: Brain,
-      title: "Skill Development",
-      description: "Identify areas for personal and professional growth",
-    },
-    {
-      icon: Users,
-      title: "Workplace Readiness",
-      description: "Prepare for success in collaborative environments",
-    },
-  ];
+  const { isDarkMode } = useContext(ThemeContext);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-4">
+    <div className={`min-h-screen p-4 ${
+      isDarkMode
+        ? "bg-gradient-to-br from-gray-900 to-gray-800"
+        : "bg-gradient-to-br from-blue-50 to-white"
+    }`}>
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Soft Skills Assessment</h1>
-          <p className="text-xl text-gray-600">Unlock Your Professional Potential</p>
-        </div>
+        {/* Assessment header and actions removed permanently */}
 
-        {/* Assessment Card */}
-        <Card className="border-2 border-blue-100 shadow-2xl rounded-2xl overflow-hidden mb-8">
-          <div className="bg-blue-600 text-white p-8 text-center">
-            <Brain className="w-16 h-16 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Professional Skills Evaluation</h2>
-            <p className="text-blue-100">Comprehensive assessment of your workplace readiness</p>
-          </div>
-
-          <CardContent className="p-8">
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              {softSkillFeatures.map((feature, index) => (
-                <SoftSkillFeature
-                  key={index}
-                  icon={feature.icon}
-                  title={feature.title}
-                  description={feature.description}
-                />
-              ))}
-            </div>
-
-            {error && (
-              <Alert variant="destructive" className="mb-6">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
-            <div className="text-center">
-              <Button
-                onClick={startAssessment}
-                disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center space-x-2 px-12 py-4 text-lg"
-              >
-                <Play className="h-6 w-6" />
-                <span>
-                  {loading ? "Generating Assessment..." : "Begin Assessment"}
-                </span>
-              </Button>
-              <p className="text-center text-sm text-gray-600 mt-4">
-                Estimated Time: 10-15 minutes • AI-Generated Questions
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* A-to-Z Soft Skills Learning Platforms */}
-        <Card className="border-2 border-blue-100 shadow-2xl rounded-2xl overflow-hidden mt-8">
-          <div className="bg-blue-600 text-white p-6 text-center">
+        {/* Soft Skills Learning Platforms */}
+        <Card className={`border-2 shadow-2xl rounded-2xl overflow-hidden mt-8 ${
+          isDarkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-blue-100"
+        }`}>
+          <div className={`p-6 text-center ${
+            isDarkMode
+              ? "bg-blue-700 text-white"
+              : "bg-blue-600 text-white"
+          }`}>
             <h2 className="text-2xl font-bold mb-2">Soft Skills Learning Platforms</h2>
-            <p className="text-blue-100">Enhance your professional skills with these platforms</p>
+            <p className={isDarkMode ? "text-blue-100" : "text-blue-100"}>Enhance your professional skills with these platforms</p>
           </div>
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -159,16 +65,28 @@ const SoftSkillAssessmentPage = () => {
                     rel="noopener noreferrer"
                     className="block group"
                   >
-                    <Card className="h-full transition-all duration-300 hover:scale-105 hover:shadow-xl border-gray-200 hover:border-blue-400">
+                    <Card className={`h-full transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+                      isDarkMode
+                        ? "bg-gray-700 border-gray-600 hover:border-blue-500"
+                        : "bg-white border-gray-200 hover:border-blue-400"
+                    }`}>
                       <div className="p-4">
                         <div className="flex items-center justify-between mb-2">
-                          <div className="p-2 rounded-lg bg-gray-100" style={{ color: platform.color }}>
+                          <div className={`p-2 rounded-lg ${
+                            isDarkMode ? "bg-gray-600" : "bg-gray-100"
+                          }`} style={{ color: platform.color }}>
                             <Icon className="w-6 h-6" />
                           </div>
-                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+                          <ExternalLink className={`w-4 h-4 group-hover:text-blue-500 ${
+                            isDarkMode ? "text-gray-400" : "text-gray-400"
+                          }`} />
                         </div>
-                        <h3 className="font-semibold text-gray-900 text-sm">{platform.name}</h3>
-                        <p className="text-xs text-gray-600 truncate">{platform.url}</p>
+                        <h3 className={`font-semibold text-sm ${
+                          isDarkMode ? "text-white" : "text-gray-900"
+                        }`}>{platform.name}</h3>
+                        <p className={`text-xs truncate ${
+                          isDarkMode ? "text-gray-400" : "text-gray-600"
+                        }`}>{platform.url}</p>
                       </div>
                     </Card>
                   </a>

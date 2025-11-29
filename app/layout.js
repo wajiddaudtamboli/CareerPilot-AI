@@ -6,6 +6,7 @@ import ChatBot from "./components/ChatBot";
 import { ClerkProvider } from '@clerk/nextjs';
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: "CareerPilot AI - Your Career Companion",
   description: "AI-powered career guidance and job preparation platform",
   icons: {
@@ -60,7 +61,6 @@ export default function RootLayout({ children }) {
     >
       <html lang="en" suppressHydrationWarning>
         <head>
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
         </head>
         <body>
           <Providers>

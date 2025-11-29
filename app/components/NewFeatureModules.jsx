@@ -82,12 +82,23 @@ export default function NewFeatureModules() {
   ];
 
   const handleModuleClick = (module) => {
-    // Navigate to assessment page with module parameter
-    router.push(`/assessment?module=${module.id}`);
+    try {
+      // Navigate to assessment page with module parameter
+      router.push(`/assessment?module=${module.id}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
+      // Fallback navigation
+      window.location.href = `/assessment?module=${module.id}`;
+    }
   };
 
   const handleStartAssessment = () => {
-    router.push('/assessment');
+    try {
+      router.push('/assessment');
+    } catch (error) {
+      console.error('Navigation error:', error);
+      window.location.href = '/assessment';
+    }
   };
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 import { ArrowRight, ChevronRight } from "lucide-react";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useContext } from "react";
+import { ThemeContext } from "../../components/ThemeContext";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
@@ -10,6 +11,7 @@ import PreviewCourse from "./components/PreviewCourse";
 import ProgressSteps from "./components/ProgressStep";
 
 const CreateCoursePage = () => {
+  const { isDarkMode } = useContext(ThemeContext);
   const [activeStep, setActiveStep] = useState(1);
   const [content, setContent] = useState();
   // const localStorageContent = localStorage.getItem("content");
@@ -34,15 +36,15 @@ const CreateCoursePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-gradient-to-b from-gray-900 to-gray-800' : 'bg-gradient-to-b from-blue-50 to-white'}`}>
       {/* Header */}
-      <div className="bg-blue-700 py-12 relative overflow-hidden">
+      <div className={`py-12 relative overflow-hidden ${isDarkMode ? 'bg-gray-800' : 'bg-blue-700'}`}>
         <div className="absolute inset-0 bg-[url('/api/placeholder/1920/400')] opacity-10 bg-cover bg-center" />
         <div className="container mx-auto px-4 relative">
           <h1 className="text-4xl font-bold text-white mb-2">
             Create New Course
           </h1>
-          <div className="flex items-center space-x-2 text-blue-100">
+          <div className={`flex items-center space-x-2 ${isDarkMode ? 'text-gray-300' : 'text-blue-100'}`}>
             <span className="text-sm">Course Creation</span>
             <ChevronRight className="h-4 w-4" />
             <span className="text-sm font-medium">
@@ -71,10 +73,10 @@ const CreateCoursePage = () => {
           </Suspense>
 
           <div className="container mx-auto px-4 py-8">
-            <div className="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
-              <p className="text-center font-extrabold">OR</p>
+            <div className={`max-w-xl mx-auto shadow-md rounded-lg p-6 ${isDarkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white'}`}>
+              <p className={`text-center font-extrabold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>OR</p>
 
-              <h2 className="text-2xl font-semibold mb-4">Join a Course</h2>
+              <h2 className={`text-2xl font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Join a Course</h2>
 
               <div className="mb-4">
                 <Label htmlFor="courseId">Course ID</Label>
@@ -97,7 +99,7 @@ const CreateCoursePage = () => {
                 </Button>
               </div>
 
-              <div className="mt-6 text-sm text-gray-600">
+              <div className={`mt-6 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 <p>
                   Don't have a course ID? Ask your instructor for the specific
                   course ID to join their course.

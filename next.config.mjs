@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output configuration for Vercel
+  // Output configuration - standalone for Vercel/Hostinger with API routes
   output: 'standalone',
+  trailingSlash: false,
+  
+  // Disable barrel optimization for react-icons
+  experimental: {
+    optimizePackageImports: [],
+  },
 
   // Externalize heavy server-only packages
   serverExternalPackages: ['@google/generative-ai', 'tesseract.js', 'firebase-admin', 'firebase'],
@@ -28,7 +34,8 @@ const nextConfig = {
   poweredByHeader: false,
 
   // Webpack adjustments
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
+    // Client-side polyfill handling
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -42,8 +49,16 @@ const nextConfig = {
         stream: false,
         util: false,
         crypto: false,
+        'react/jsx-runtime': 'react/jsx-runtime.js',
+        'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js',
       };
     }
+    
+    // Handle module resolution issues
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': './app',
+    };
 
     config.module.rules.push({
       test: /\.m?js$/,

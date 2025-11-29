@@ -18,7 +18,7 @@ const ChatBot = () => {
       setMessages([
         {
           role: 'assistant',
-          content: 'Hello! I\'m your AI career assistant. How can I help you with your job search or career planning today?'
+          content: "Hello! I'm your AI career assistant. How can I help you with your job search or career planning today?"
         }
       ]);
     }

@@ -130,9 +130,9 @@ export default function JobPrepHomepage() {
             <div className="space-y-8">
               <div className={`inline-flex items-center space-x-2 ${
                 isDarkMode
-                  ? "bg-gray-800/70 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-amber-200"
+                  ? "bg-gray-800/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-white"
                   : "bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-blue-700"
-              }`}>
+              } dark:[&_span]:!text-white dark:[&_svg]:!text-white`}>
                 <Zap className="w-4 h-4" />
                 <span>AI-Powered Job Preparation</span>
               </div>
@@ -222,9 +222,9 @@ export default function JobPrepHomepage() {
             <div className="relative">
               <div className={`relative ${
                 isDarkMode
-                  ? "bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700"
+                  ? "bg-gradient-to-br from-gray-800/90 to-gray-900/90 border border-gray-700"
                   : "bg-gradient-to-br from-blue-50/80 to-indigo-50/80 border border-blue-200"
-                } backdrop-blur-sm rounded-3xl p-8`}>
+                } backdrop-blur-sm rounded-3xl p-8 dark:text-white dark:[&_p]:text-gray-100 dark:[&_span]:text-gray-100 dark:[&_div]:text-gray-100`}>
                 <div className={`absolute -top-4 -right-4 w-24 h-24 pointer-events-none ${
                   isDarkMode
                     ? "bg-gradient-to-r from-gray-600/20 to-gray-700/20"
@@ -238,38 +238,24 @@ export default function JobPrepHomepage() {
 
                 <div className="space-y-6">
                   <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-400" />
-                    <span className={`${
-                      isDarkMode ? "text-white" : "text-gray-700"
-                    }`}>
+                    <CheckCircle className="w-6 h-6 text-green-500" />
+                    <span className="text-gray-800 font-medium">
                       AWS Certification achieved
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-400" />
-                    <span className={`${
-                      isDarkMode ? "text-white" : "text-gray-700"
-                    }`}>Company project completed</span>
+                    <CheckCircle className="w-6 h-6 text-green-500" />
+                    <span className="text-gray-800 font-medium">Company project completed</span>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-400" />
-                    <span className={`${
-                      isDarkMode ? "text-white" : "text-gray-700"
-                    }`}>Hackathon competition won</span>
+                    <CheckCircle className="w-6 h-6 text-green-500" />
+                    <span className="text-gray-800 font-medium">Hackathon competition won</span>
                   </div>
 
-                  <div className={`${
-                    isDarkMode
-                      ? "bg-gray-800/70"
-                      : "bg-white/80"
-                    } backdrop-blur-sm rounded-xl p-4 mt-6`}>
+                  <div className="bg-gray-700/95 backdrop-blur-sm rounded-xl p-4 mt-6">
                     <div className="flex items-center justify-between mb-2">
-                      <span className={`${
-                        isDarkMode ? "text-gray-300" : "text-gray-600"
-                      }`}>Learning Progress</span>
-                      <span className={`${
-                        isDarkMode ? "text-gray-300" : "text-blue-600"
-                      } font-semibold`}>89%</span>
+                      <span className="text-gray-100 font-medium">Learning Progress</span>
+                      <span className="text-white font-semibold">89%</span>
                     </div>
                     <div className={`w-full ${
                       isDarkMode ? "bg-gray-700" : "bg-gray-200"
@@ -335,13 +321,13 @@ export default function JobPrepHomepage() {
                   isDarkMode
                     ? "bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10"
                     : "bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white shadow-lg"
-                }`}
+                } dark:text-white dark:[&_h3]:!text-white dark:[&_p]:!text-gray-200`}
               >
                 <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${
                   isDarkMode
                     ? "bg-gradient-to-r from-gray-600 to-gray-700"
                     : "bg-gradient-to-r from-blue-500 to-indigo-500"
-                }`}>
+                } dark:[&_svg]:!text-white`}>
                   <feature.icon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className={`text-xl font-semibold mb-4 ${
@@ -350,7 +336,7 @@ export default function JobPrepHomepage() {
                   {feature.title}
                 </h3>
                 <p className={`leading-relaxed ${
-                  isDarkMode ? "text-gray-300" : "text-gray-600"
+                  isDarkMode ? "text-gray-200" : "text-gray-600"
                 }`}>
                   {feature.description}
                 </p>
@@ -365,9 +351,9 @@ export default function JobPrepHomepage() {
               <div className="space-y-6">
                 <div className={`inline-flex items-center space-x-2 backdrop-blur-sm rounded-full px-4 py-2 text-sm ${
                   isDarkMode
-                    ? "bg-gray-600/20 text-gray-300"
+                    ? "bg-gray-700/90 text-white"
                     : "bg-blue-100/80 text-blue-700"
-                }`}>
+                } dark:[&_span]:!text-white dark:[&_svg]:!text-white`}>
                   <Zap className="w-4 h-4" />
                   <span>AI-Powered</span>
                 </div>
@@ -389,15 +375,15 @@ export default function JobPrepHomepage() {
                   Earn recognized certifications from AWS, Google Cloud, Microsoft Azure, and other leading platforms. Validate your skills with industry-standard credentials that employers trust.
                 </p>
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
+                  <div className="flex items-center space-x-3 dark:[&_span]:!text-white">
+                    <CheckCircle className="w-5 h-5 text-green-400 dark:text-green-400" />
                     <span className={`${
-                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                      isDarkMode ? "text-white" : "text-gray-600"
                     }`}>
                       AWS, Azure, GCP certified paths
                     </span>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-3 dark:[&_span]:!text-white">
                     <CheckCircle className="w-5 h-5 text-green-400" />
                     <span className={`${
                       isDarkMode ? "text-gray-300" : "text-gray-600"
@@ -956,7 +942,7 @@ export default function JobPrepHomepage() {
               <blockquote className={`text-2xl md:text-3xl mb-10 leading-relaxed font-semibold ${
                 isDarkMode ? "text-white" : "text-gray-800"
               }`} style={{ lineHeight: '1.6' }}>
-                &quot;{teamMembers[currentTestimonial].content}&quot;
+                "{teamMembers[currentTestimonial].content}"
               </blockquote>
 
               <div>

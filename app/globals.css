@@ -8,7 +8,7 @@ body {
 
 @layer utilities {
   .text-balance {
-    text-wrap: balance;
+    /* text-wrap: balance; - Disabled for older browser compatibility */
   }
 }
 
@@ -139,26 +139,76 @@ body {
 /* Apply dark theme to all major components */
 .dark-theme, .dark {
   color-scheme: dark;
-  color: #f1f1f1 !important;
 }
 
-/* Override any conflicting background colors */
-.dark-theme header,
-.dark-theme main,
-.dark-theme footer,
-.dark-theme nav,
-.dark-theme aside,
-.dark-theme section,
-.dark-theme div,
-.dark header,
-.dark main,
-.dark footer,
-.dark nav,
-.dark aside,
-.dark section,
-.dark div {
-  background-color: inherit;
-  color: #f1f1f1 !important;
+/* Dark mode text visibility */
+html.dark,
+html.dark body {
+  color: #f1f1f1;
+}
+
+/* Override gray text colors in dark mode */
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-gray-700,
+html.dark .text-gray-600 {
+  color: #e5e7eb;
+}
+
+html.dark .text-gray-500 {
+  color: #9ca3af;
+}
+
+html.dark .text-gray-400 {
+  color: #6b7280;
+}
+
+/* CRITICAL: Force white text on any gradient or colored backgrounds in dark mode */
+html.dark [class*="bg-gradient"],
+html.dark [class*="backdrop-blur"] {
+  color: white !important;
+}
+
+html.dark [class*="bg-gradient"] *,
+html.dark [class*="backdrop-blur"] * {
+  color: inherit;
+}
+
+html.dark [class*="bg-gradient"] span,
+html.dark [class*="backdrop-blur"] span,
+html.dark [class*="bg-gradient"] p,
+html.dark [class*="backdrop-blur"] p,
+html.dark [class*="bg-gradient"] div,
+html.dark [class*="backdrop-blur"] div,
+html.dark [class*="bg-gradient"] h1,
+html.dark [class*="backdrop-blur"] h1,
+html.dark [class*="bg-gradient"] h2,
+html.dark [class*="backdrop-blur"] h2,
+html.dark [class*="bg-gradient"] h3,
+html.dark [class*="backdrop-blur"] h3 {
+  color: white !important;
+}
+
+/* Dark mode backgrounds */
+html.dark .bg-white {
+  background-color: rgb(24, 24, 27);
+}
+
+html.dark .bg-gray-50 {
+  background-color: rgb(39, 39, 42);
+}
+
+html.dark .bg-gray-100 {
+  background-color: rgb(39, 39, 42);
+}
+
+/* Dark mode borders */
+html.dark .border-gray-200 {
+  border-color: rgb(63, 63, 70);
+}
+
+html.dark .border-gray-300 {
+  border-color: rgb(82, 82, 91);
 }
 
 /* Golden accents for dark mode */
@@ -177,11 +227,8 @@ body {
   color: hsl(var(--text-primary));
 }
 
-.dark-theme .text-accent, .dark .text-accent,
-.dark-theme .text-purple-500, .dark .text-purple-500,
-.dark-theme .text-blue-500, .dark .text-blue-500,
-.dark-theme .text-green-500, .dark .text-green-500 {
-  color: hsl(var(--accent-color)) !important;
+.dark-theme .text-accent, .dark .text-accent {
+  color: hsl(var(--accent-color));
 }
 
 /* Ensure text contrasts properly in dark mode */
@@ -191,65 +238,12 @@ body {
 .dark .text-gray-700,
 .dark .text-gray-800,
 .dark .text-gray-900 {
-  color: #f1f1f1 !important;
+  color: #f1f1f1;
 }
 
-/* Force text to be white in dark mode */
-.dark-theme p, .dark-theme span, .dark-theme div, .dark-theme li,
-.dark p, .dark span, .dark div, .dark li {
-  color: #f1f1f1 !important;
-}
 
-.dark-theme .bg-white,
-.dark-theme .bg-gray-50,
-.dark-theme .bg-gray-100,
-.dark .bg-white,
-.dark .bg-gray-50,
-.dark .bg-gray-100 {
-  background-color: hsl(var(--card)) !important;
-}
 
-.dark-theme .border,
-.dark-theme .border-gray-100,
-.dark-theme .border-gray-200,
-.dark .border,
-.dark .border-gray-100,
-.dark .border-gray-200 {
-  border-color: hsl(var(--border)) !important;
-}
 
-/* Force dark background on specific components */
-.dark-theme nav.bg-white,
-.dark-theme div.bg-white,
-.dark nav.bg-white,
-.dark div.bg-white {
-  background-color: hsl(var(--card)) !important;
-}
-
-/* Gold accent on key interactive elements */
-.dark-theme button.bg-blue-500,
-.dark-theme button.bg-purple-500,
-.dark-theme button.bg-green-500,
-.dark button.bg-blue-500,
-.dark button.bg-purple-500,
-.dark button.bg-green-500,
-.dark-theme .btn-primary,
-.dark .btn-primary {
-  background-color: hsl(45 93% 47%) !important;
-  color: #000 !important;
-  transition: all 0.3s ease;
-}
-
-.dark-theme button.bg-blue-500:hover,
-.dark-theme button.bg-purple-500:hover,
-.dark-theme button.bg-green-500:hover,
-.dark button.bg-blue-500:hover,
-.dark button.bg-purple-500:hover,
-.dark button.bg-green-500:hover,
-.dark-theme .btn-primary:hover,
-.dark .btn-primary:hover {
-  background-color: hsl(45 93% 40%) !important;
-}
 
 /* Golden progress bars and indicators */
 .dark-theme progress,
@@ -259,31 +253,23 @@ body {
   background-color: hsl(45 93% 47%) !important;
 }
 
-/* Fix for any other elements */
-.dark-theme [class*="bg-purple"],
-.dark-theme [class*="bg-blue"],
-.dark [class*="bg-purple"],
-.dark [class*="bg-blue"] {
-  background-color: hsl(var(--secondary)) !important;
-}
 
-.dark-theme [class*="text-purple"],
-.dark-theme [class*="text-blue"],
-.dark [class*="text-purple"],
-.dark [class*="text-blue"] {
-  color: hsl(var(--accent-color)) !important;
-}
 
 /* Special colorations for heading texts in dark mode */
 .dark-theme h1, .dark-theme h2, .dark-theme h3,
 .dark h1, .dark h2, .dark h3 {
-  color: hsl(45 93% 47%) !important;
+  color: hsl(45 93% 47%);
 }
 
 /* Enhanced light mode styling */
 body:not(.dark):not(.dark-theme) {
   color: hsl(var(--text-primary));
   background-color: hsl(var(--background));
+}
+
+/* Light mode text visibility */
+html:not(.dark) body {
+  color: #1f2937;
 }
 
 body:not(.dark):not(.dark-theme) h1,
@@ -330,7 +316,7 @@ body:not(.dark):not(.dark-theme) button.bg-purple-500,
 body:not(.dark):not(.dark-theme) button.bg-green-500,
 body:not(.dark):not(.dark-theme) .btn-primary {
   background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground)) !important;
+  color: hsl(var(--primary-foreground));
   transition: all 0.3s ease;
 }
 

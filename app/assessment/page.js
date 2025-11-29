@@ -1,10 +1,11 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { ThemeContext } from "../components/ThemeContext";
+import ErrorBoundary from "../components/ErrorBoundary";
 import { Calculator, Heart, Users, Code, ArrowRight, CheckCircle } from "lucide-react";
 
-export default function AssessmentPage() {
+function AssessmentContent() {
   const { isDarkMode } = useContext(ThemeContext);
   const searchParams = useSearchParams();
   const moduleParam = searchParams.get('module');
@@ -283,5 +284,15 @@ function ModuleAssessment({ moduleParam, moduleDisplayName, isDarkMode, question
         <a href="/assessment" className={`inline-block px-4 py-2 rounded-full text-xs font-medium ${isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>Back</a>
       </div>
     </div>
+  );
+}
+
+export default function AssessmentPage() {
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+        <AssessmentContent />
+      </Suspense>
+    </ErrorBoundary>
   );
 }

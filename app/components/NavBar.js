@@ -28,10 +28,10 @@ function NavBar() {
       name: "Learn",
       submenu: [
         { name: "Courses", href: "/learn?page=CoursesExplore" },
-        { name: "Industry-Based Certifications", href: "/learn?page=IndustryCertifications" },
-        { name: "Projects – Real-World Problems", href: "/learn?page=ProjectsPlatforms" },
-        { name: "Competitions & Hackathons", href: "/learn?page=CompetitionsHackathons" },
-        { name: "Aptitude Learning Platforms", href: "/learn?page=AptitudeLearningPlatforms" },
+        { name: "Roadmaps", href: "/learn?page=Roadmaps" },
+        { name: "Recall", href: "/learn/recall" },
+        { name: "Test Ability", href: "/learn?page=TestAbility" },
+        { name: "Course Details", href: "/learn/course" },
       ],
     },
     {

@@ -29,12 +29,15 @@ const isPublicRoute = createRouteMatcher([
   '/api/scrape(.*)',
   '/api/users(.*)',
   '/api/database(.*)',
+  '/api/assessment(.*)',
+  '/assessment(.*)',
 ]);
 
 export default clerkMiddleware(async (auth, request) => {
   // Always serve favicon.ico from local folder icon (PNG), not .ico
   if (request.nextUrl.pathname === '/favicon.ico') {
-    const res = NextResponse.redirect('/favicon-32x32.png?v=3', { status: 308 });
+    const url = new URL('/favicon-32x32.png?v=3', request.url);
+    const res = NextResponse.redirect(url, { status: 308 });
     // Explicitly disable caching to force Chrome to refetch the PNG
     res.headers.set('Cache-Control', 'no-store, max-age=0, must-revalidate');
     res.headers.set('Pragma', 'no-cache');

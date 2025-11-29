@@ -14,7 +14,7 @@ function fibonacci(n) {
 
 console.log("Fibonacci sequence:");
 for (let i = 0; i < 10; i++) {
-  console.log(\`F(\${i}) = \${fibonacci(i)}\`);
+  console.log("F(" + i + ") = " + fibonacci(i));
 }
 `);
   const [output, setOutput] = useState('');

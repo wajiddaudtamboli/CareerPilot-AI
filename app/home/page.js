@@ -27,8 +27,11 @@ import {
 } from "lucide-react";
 import { FaPaperPlane } from "react-icons/fa";
 import ChatBot from "../components/ChatBot";
+import { useContext } from "react";
+import { ThemeContext } from "../components/ThemeContext";
 
 export default function Home() {
+  const { isDarkMode } = useContext(ThemeContext);
   const navigationItems = [
     {
       category: "Phase 1 :Career Planning",
@@ -162,16 +165,28 @@ export default function Home() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${
+        isDarkMode
+          ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+          : "bg-gray-50"
+      }`}>
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h1 className={`text-3xl font-bold text-center mb-12 ${
+            isDarkMode ? "text-white" : "text-gray-900"
+          }`}>
             AI Powered Career Coach for Job Preparation
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {navigationItems.map((category, idx) => (
-              <div key={idx} className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              <div key={idx} className={`rounded-lg shadow-md p-6 ${
+                isDarkMode
+                  ? "bg-gray-800 border border-gray-700"
+                  : "bg-white"
+              }`}>
+                <h2 className={`text-xl font-semibold mb-4 ${
+                  isDarkMode ? "text-white" : "text-gray-800"
+                }`}>
                   {category.category}
                 </h2>
                 <div className="space-y-3">
@@ -179,9 +194,15 @@ export default function Home() {
                     <Link
                       key={itemIdx}
                       href={item.href}
-                      className="flex items-center p-2 rounded-md hover:bg-gray-50 transition-colors duration-150 text-gray-700 hover:text-gray-900"
+                      className={`flex items-center p-2 rounded-md transition-colors duration-150 ${
+                        isDarkMode
+                          ? "text-gray-200 hover:bg-gray-700 hover:text-white"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                      }`}
                     >
-                      <item.icon className="w-5 h-5 mr-3 text-blue-600" />
+                      <item.icon className={`w-5 h-5 mr-3 ${
+                        isDarkMode ? "text-blue-400" : "text-blue-600"
+                      }`} />
                       <span>{item.text}</span>
                     </Link>
                   ))}

@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
 
+// Add request validation
+function validateRequest(request) {
+  // Add any request validation logic here
+  return true;
+}
+
 // Comprehensive 4-module career assessment dataset for 1st year engineering students
 // 40 questions total (10 per module) - beginner-friendly, globally understandable, non-technical
 
@@ -376,6 +382,14 @@ const questionSet = {
 
 export async function GET(request) {
   try {
+    // Validate request
+    if (!validateRequest(request)) {
+      return NextResponse.json({
+        success: false,
+        error: 'Invalid request'
+      }, { status: 400 });
+    }
+
     const { searchParams } = new URL(request.url);
     const module = searchParams.get('module');
     
@@ -392,9 +406,11 @@ export async function GET(request) {
       allModules: questionSet
     });
   } catch (error) {
+    console.error('Assessment API error:', error);
     return NextResponse.json({
       success: false,
-      error: 'Failed to fetch questions'
+      error: 'Failed to fetch questions',
+      details: error.message
     }, { status: 500 });
   }
 }
